@@ -1491,11 +1491,11 @@
         }
         function renderGrid(tools) {
             const g = document.getElementById('grid'); if (!tools.length) { g.innerHTML = '<div class="empty">找不到符合條件的工具 🔍</div>'; return }
-            g.innerHTML = tools.map((t, i) => { const trades = t.trade.split(/\s*\/\s*/).filter(Boolean); return `<div class="card"><div class="card-thumb-wrap">${t.thumb ? `<img class="card-thumb" src="${t.thumb}" alt="${esc(t.name)}" loading="lazy">` : '<div class="card-thumb"></div>'}<div class="card-price">${esc(t.price)}</div><div class="card-time">${esc(t.time)}</div><div class="card-overlay"><button class="card-action gif-act" onclick="showGif(${i})">${IC.play} GIF</button><button class="card-action yt-act" onclick="showYT(${i})">${IC.yt} 影片</button></div></div><div class="card-body"><div class="card-top"><div class="card-name">${esc(t.name)}</div>${t.link && t.link !== '-' ? `<a class="card-link" href="${esc(t.link)}" target="_blank" rel="noopener">${IC.link}</a>` : ''}</div><div class="tags">${trades.map(s => `<span class="tag tag-t">${esc(s)}</span>`).join('')}${t.usage && t.usage !== '-' ? `<span class="tag tag-u">${esc(t.usage)}</span>` : ''}${t.pain && t.pain !== '-' ? `<span class="tag tag-p">${esc(t.pain)}</span>` : ''}</div><div class="card-desc">${esc(t.desc)}</div><div class="card-meta">${t.alt && t.alt !== '-' ? `<div class="card-meta-row"><span class="card-meta-label">替代方案</span><span class="card-meta-val">${esc(t.alt)}</span></div>` : ''}${t.cost && t.cost !== '-' ? `<div class="card-meta-row"><span class="card-meta-label cost">相對成本</span><span class="card-meta-val">${esc(t.cost)}</span></div>` : ''}</div></div></div>` }).join('')
+            g.innerHTML = tools.map((t) => { const i = allTools.indexOf(t); const trades = t.trade.split(/\s*\/\s*/).filter(Boolean); return `<div class="card"><div class="card-thumb-wrap">${t.thumb ? `<img class="card-thumb" src="${t.thumb}" alt="${esc(t.name)}" loading="lazy">` : '<div class="card-thumb"></div>'}<div class="card-price">${esc(t.price)}</div><div class="card-time">${esc(t.time)}</div><div class="card-overlay"><button class="card-action gif-act" onclick="showGif(${i})">${IC.play} GIF</button><button class="card-action yt-act" onclick="showYT(${i})">${IC.yt} 影片</button></div></div><div class="card-body"><div class="card-top"><div class="card-name">${esc(t.name)}</div>${t.link && t.link !== '-' ? `<a class="card-link" href="${esc(t.link)}" target="_blank" rel="noopener">${IC.link}</a>` : ''}</div><div class="tags">${trades.map(s => `<span class="tag tag-t">${esc(s)}</span>`).join('')}${t.usage && t.usage !== '-' ? `<span class="tag tag-u">${esc(t.usage)}</span>` : ''}${t.pain && t.pain !== '-' ? `<span class="tag tag-p">${esc(t.pain)}</span>` : ''}</div><div class="card-desc">${esc(t.desc)}</div><div class="card-meta">${t.alt && t.alt !== '-' ? `<div class="card-meta-row"><span class="card-meta-label">替代方案</span><span class="card-meta-val">${esc(t.alt)}</span></div>` : ''}${t.cost && t.cost !== '-' ? `<div class="card-meta-row"><span class="card-meta-label cost">相對成本</span><span class="card-meta-val">${esc(t.cost)}</span></div>` : ''}</div></div></div>` }).join('')
         }
         function renderList(tools) {
             const el = document.getElementById('list'); if (!tools.length) { el.innerHTML = '<div class="empty">找不到符合條件的工具 🔍</div>'; return }
-            el.innerHTML = `<table><thead><tr><th>時間</th><th>產品名稱</th><th>工種</th><th>用途</th><th>售價</th><th>成本痛點</th><th>操作</th></tr></thead><tbody>${tools.map((t, i) => { const trades = t.trade.split(/\s*\/\s*/).filter(Boolean); return `<tr><td class="l-time">${esc(t.time)}</td><td><div class="l-name">${esc(t.name)}</div><div class="l-desc">${esc(t.desc)}</div></td><td class="l-trade">${trades.map(s => `<span class="tag tag-t">${esc(s)}</span>`).join(' ')}</td><td>${esc(t.usage)}</td><td class="l-price">${esc(t.price)}</td><td>${t.pain && t.pain !== '-' ? `<span class="tag tag-p">${esc(t.pain)}</span>` : ''}</td><td class="l-actions"><button class="l-act" onclick="showGif(${i})">${IC.playD}</button><button class="l-act yt" onclick="showYT(${i})">${IC.yt}</button>${t.link && t.link !== '-' ? `<a class="l-act" href="${esc(t.link)}" target="_blank">${IC.link}</a>` : ''}</td></tr>` }).join('')}</tbody></table>`
+            el.innerHTML = `<table><thead><tr><th>時間</th><th>產品名稱</th><th>工種</th><th>用途</th><th>售價</th><th>成本痛點</th><th>操作</th></tr></thead><tbody>${tools.map((t) => { const i = allTools.indexOf(t); const trades = t.trade.split(/\s*\/\s*/).filter(Boolean); return `<tr><td class="l-time">${esc(t.time)}</td><td><div class="l-name">${esc(t.name)}</div><div class="l-desc">${esc(t.desc)}</div></td><td class="l-trade">${trades.map(s => `<span class="tag tag-t">${esc(s)}</span>`).join(' ')}</td><td>${esc(t.usage)}</td><td class="l-price">${esc(t.price)}</td><td>${t.pain && t.pain !== '-' ? `<span class="tag tag-p">${esc(t.pain)}</span>` : ''}</td><td class="l-actions"><button class="l-act" onclick="showGif(${i})">${IC.playD}</button><button class="l-act yt" onclick="showYT(${i})">${IC.yt}</button>${t.link && t.link !== '-' ? `<a class="l-act" href="${esc(t.link)}" target="_blank">${IC.link}</a>` : ''}</td></tr>` }).join('')}</tbody></table>`
         }
 
         let curIdx = 0;
@@ -1559,6 +1559,18 @@
                 if (!groups[primary]) groups[primary] = [];
                 groups[primary].push(t);
             });
+
+            // Move categories with 1-2 items to "其他"
+            const otherTools = [];
+            for (const cat in groups) {
+                if (groups[cat].length <= 2) {
+                    otherTools.push(...groups[cat]);
+                    delete groups[cat];
+                }
+            }
+            if (otherTools.length > 0) {
+                groups['其他'] = otherTools;
+            }
 
             const sidebarHtml = `<div class="p-sidebar"><div class="ps-title">目錄導覽</div>${Object.keys(groups).map((cat, idx) => `<a href="#cat-${idx}" class="ps-link">${CI[cat] || '🔧'} ${esc(cat)}</a>`).join('')}</div>`;
 
