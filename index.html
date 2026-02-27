@@ -1190,36 +1190,12 @@
             background: rgba(249, 115, 22, .04)
         }
 
-        .pcat-suggest .pcat-list li::before {
-            background: #f97316
-        }
-
-        /* ── Sidebar Index ── */
-        .p-sidebar {
-            position: sticky;
-            top: 80px;
-            width: 200px;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            height: fit-content;
-            max-height: calc(100vh - 100px);
-            overflow-y: auto;
-        }
-
-        .p-sidebar::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .p-sidebar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+        padding-left: 12px;
         }
 
         .ps-link {
             padding: 8px 12px;
-            color: rgba(255, 255, 255, .6);
+            color: rgba(255, 255, 255, .5);
             text-decoration: none;
             font-size: 13px;
             font-weight: 500;
@@ -1240,24 +1216,25 @@
 
         .pview-container {
             display: flex;
-            gap: 40px;
-            max-width: 1300px;
+            justify-content: center;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 32px 24px;
+            padding: 40px 240px 40px 24px;
+            /* Space for the fixed right sidebar */
         }
 
         .pview-content {
-            flex: 1;
-            min-width: 0;
+            width: 100%;
+            max-width: 1000px;
         }
 
-        @media(max-width:1000px) {
+        @media(max-width:1100px) {
             .p-sidebar {
                 display: none;
             }
 
             .pview-container {
-                display: block;
+                padding: 24px;
             }
         }
 
@@ -1515,33 +1492,48 @@
                 groups[primary].push(t);
             });
 
-            const sidebarHtml = `<div class="p-sidebar">${Object.keys(groups).map((cat, idx) => `<a href="#cat-${idx}" class="ps-link">${CI[cat] || '🔧'} ${esc(cat)}</a>`).join('')}</div>`;
+            const sidebarHtml = `<div class="p-sidebar"><div class="ps-title">目錄導覽</div>${Object.keys(groups).map((cat, idx) => `<a href="#cat-${idx}" class="ps-link">${CI[cat] || '🔧'} ${esc(cat)}</a>`).join('')}</div>`;
 
             const contentHtml = `<div class="pview-content">${Object.entries(groups).map(([cat, tools], idx) => {
                 // Pick the HighRes image based on the category name
-                const bgThumb = CHighResImgs[cat] || (tools[0]?.thumb || '');
-                return `<div class="pcat" id="cat-${idx}">
+                const bgImg = CHighResImgs[cat] || 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=1200&q=80';
+
+                // Aggregate unique costs and alternatives for concise summary
+                const uniqueCosts = [...new Set(tools.map(t => t.cost).filter(c => c !== '-'))];
+                const uniqueAlts = [...new Set(tools.map(t => t.alt).filter(a => a !== '-'))];
+
+                // Keep summaries short to prevent massive text blocks
+                const summaryAlt = uniqueAlts.slice(0, 3).join('、') || '傳統機具';
+                const summaryCost = uniqueCosts.slice(0, 2).join('與') || '效率折損';
+
+                return `
+<div class="pcat" id="cat-${idx}">
   <div class="pcat-banner">
-    ${bgThumb ? `<div class="pcat-banner-bg" style="background-image:url('${bgThumb}')"></div>` : ''}
+    <div class="pcat-banner-bg" style="background-image:url('${bgImg}')"></div>
     <div class="pcat-banner-content">
       <div class="pcat-icon">${CI[cat] || '🔧'}</div>
-      <div><div class="pcat-title">${esc(cat)}</div><div class="pcat-count">${tools.length} 項相關工具</div></div>
+      <div>
+        <div class="pcat-title">${esc(cat)}</div>
+        <div class="pcat-count">${tools.length} 項相關工具</div>
+      </div>
     </div>
   </div>
-  <div class="pcat-pills">${tools.map(t => `<a class="pcat-pill" href="${t.link && t.link !== '-' ? esc(t.link) : '#'}" target="_blank">${esc(t.name)} ${IC.extLink}</a>`).join('')}</div>
   <div class="pcat-grid">
     <div class="pcat-card red-card"><div class="pcat-card-title red">${IC.warn} 需要解決的問題</div>
-      <ul class="pcat-list">${tools.map(t => `<li>${esc(t.cost && t.cost !== '-' ? t.cost : '傳統方式效率不彰')}</li>`).join('')}</ul></div>
+      <ul class="pcat-list">${tools.map(t => `<li>${esc(t.cost && t.cost !== '-' ? t.cost : '施工效率與品質不穩定')}</li>`).join('')}</ul></div>
     <div class="pcat-card green-card"><div class="pcat-card-title green">${IC.target} 使用工具的效益</div>
       <ul class="pcat-list">${tools.map(t => `<li>${esc(t.desc)}</li>`).join('')}</ul></div>
-    <div class="pcat-card yellow-card"><div class="pcat-card-title yellow">${IC.bulb} 觀察與思考</div>
-      <ul class="pcat-list">${tools.map(t => `<li>為什麼不是用手工? 為什麼不是用 ${esc(t.alt !== '-' ? t.alt : '傳統工具')} 來解決? <br><span style="opacity:0.7;font-size:12px">👉 因為導入 ${esc(t.name)} 能解決${esc(t.pain !== '-' ? t.pain : '上述痛點')}的抉擇。</span></li>`).join('')}</ul></div>
-    <div class="pcat-card red-card"><div class="pcat-card-title red">${IC.ban} 應避免的思維</div>
-      <ul class="pcat-list">${tools.map(t => `<li>固守使用「${esc(t.alt !== '-' ? t.alt : '傳統手工')}」的舒適圈，將導致隱形成本持續擴大。</li>`).join('')}</ul></div>
+    <div class="pcat-card yellow-card" style="grid-column: 1 / -1;"><div class="pcat-card-title yellow">${IC.bulb} 觀察與思考</div>
+      <div style="font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.8; padding: 4px 8px;">
+        傳統施作如果依賴手工或通用工具（如 ${esc(summaryAlt)}），容易伴隨著隱形的${esc(summaryCost)}成本。<br>
+        導入本類別工具的核心價值在於：<b>透過專用配件將「依賴技術的變數」轉換為「可預期的標準產出」</b>，減少人為誤差與重工風險。
+      </div>
+    </div>
   </div>
-</div>`}).join('')}</div>`;
+</div>`
+            }).join('')}</div>`;
 
-            document.getElementById('pview').innerHTML = `<div class="pview-container">${sidebarHtml}${contentHtml}</div>`;
+            document.getElementById('pview').innerHTML = `<div class="pview-container">${contentHtml}${sidebarHtml}</div>`;
 
             // Highlight sidebar on scroll
             setTimeout(() => {
