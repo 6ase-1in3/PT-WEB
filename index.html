@@ -1190,7 +1190,50 @@
             background: rgba(249, 115, 22, .04)
         }
 
-        padding-left: 12px;
+        .pcat-suggest .pcat-list li::before {
+            background: #f97316
+        }
+
+        /* ── Sidebar Index ── */
+        .p-sidebar {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 24px;
+            width: 220px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            border-left: 2px solid rgba(255, 255, 255, 0.05);
+            padding-left: 16px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            background: rgba(11, 14, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            z-index: 100;
+        }
+
+        .p-sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .p-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .ps-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 700;
+            margin-bottom: 12px;
+            padding-left: 12px;
         }
 
         .ps-link {
@@ -1527,6 +1570,11 @@
       <div style="font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.8; padding: 4px 8px;">
         傳統施作如果依賴手工或通用工具（如 ${esc(summaryAlt)}），容易伴隨著隱形的${esc(summaryCost)}成本。<br>
         導入本類別工具的核心價值在於：<b>透過專用配件將「依賴技術的變數」轉換為「可預期的標準產出」</b>，減少人為誤差與重工風險。
+      </div>
+    </div>
+    <div class="pcat-card red-card" style="grid-column: 1 / -1;"><div class="pcat-card-title red">${IC.ban} 應避免的思維</div>
+      <div style="font-size: 14px; color: #fca5a5; line-height: 1.8; padding: 4px 8px;">
+        固守使用「${esc(summaryAlt)}」的舒適圈，將導致上述隱形成本持續擴大，降低整體工程效率與利潤。
       </div>
     </div>
   </div>
