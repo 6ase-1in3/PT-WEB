@@ -1617,7 +1617,7 @@
                 const descHtml = renderList(tools.map(t => t.desc), '提升效率');
 
                 return `
-                        < div class="pcat" id = "cat-${idx}" >
+<div class="pcat" id="cat-${idx}">
   <div class="pcat-banner">
     <div class="pcat-banner-bg" style="background-image:url('${bgImg}')"></div>
     <div class="pcat-banner-content">
@@ -1642,7 +1642,7 @@
       </div>
     </div>
   </div>
-</div > `
+</div>`
             }).join('')}</div>`;
 
             document.getElementById('pview').innerHTML = `<div class="pview-container">${contentHtml}${sidebarHtml}</div>`;
