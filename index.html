@@ -1199,7 +1199,7 @@
             position: fixed;
             top: 50%;
             transform: translateY(-50%);
-            right: 24px;
+            right: 40px;
             width: 220px;
             display: flex;
             flex-direction: column;
@@ -1262,13 +1262,38 @@
             justify-content: center;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 240px 40px 24px;
-            /* Space for the fixed right sidebar */
+            padding: 40px 24px;
         }
 
         .pview-content {
             width: 100%;
-            max-width: 1000px;
+            max-width: 900px;
+            margin: 0 auto;
+            /* Force strict centering */
+        }
+
+        /* List folding styling */
+        .pcat-list[data-expanded="false"] li:nth-child(n+6) {
+            display: none;
+        }
+
+        .pcat-list-more {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            padding: 8px 16px;
+            margin-top: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .pcat-list-more:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         @media(max-width:1100px) {
@@ -1541,16 +1566,58 @@
                 // Pick the HighRes image based on the category name
                 const bgImg = CHighResImgs[cat] || 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=1200&q=80';
 
-                // Aggregate unique costs and alternatives for concise summary
-                const uniqueCosts = [...new Set(tools.map(t => t.cost).filter(c => c !== '-'))];
-                const uniqueAlts = [...new Set(tools.map(t => t.alt).filter(a => a !== '-'))];
+                // AI Designer Insight Logic
+                const exTool = tools[0]?.name || '現代專屬機具';
+                const exTool2 = tools[1]?.name || '高效夾具';
 
-                // Keep summaries short to prevent massive text blocks
-                const summaryAlt = uniqueAlts.slice(0, 3).join('、') || '傳統機具';
-                const summaryCost = uniqueCosts.slice(0, 2).join('與') || '效率折損';
+                const getInsight = (c) => {
+                    const map = {
+                        '木工裝潢': {
+                            o: `現代木工面臨最大的挑戰在於「非標準化地形」與「收邊精度」。過去依賴手工紙板打版或目視切割，容易因人為手感導致密合度不佳。例如導入 ${esc(exTool)} ${tools[1] ? '或 ' + esc(exTool2) : ''} 等輔助定位系統，能將「依賴經驗的手感」轉化為「可被精確複製的標準化動作」，大幅提升最終成品的精緻度。`,
+                            a: '應避免「純手作才叫職人精神」的迷思，過度迷信個人經驗而抗拒引進標準化輔助治具，將導致施工品質無法隨人員變動而穩定輸出。'
+                        },
+                        '水電工程': {
+                            o: `水電佈線與管路安裝高度依賴現場環境的適應力，傳統上經常需要破壞性施工或在狹小空間內進行盲作業。透過導入如 ${esc(exTool)} 等測量或鑽孔夾具，我們能將施工模式從「試錯與事後修補」升級為「事前定錨與精準破壞」，有效降低災難性的重工風險。`,
+                            a: '應避免「不管三七二十一先打再說」的粗放思維，忽略事前精準探測與治具導引能帶來的巨大重工成本節約。'
+                        },
+                        '金屬加工': {
+                            o: `金屬加工的痛點在於處理高硬度材料時所伴隨的「危險粉塵」與「高溫熱變形」。使用傳統砂輪粗磨難以保證表面完整性。觀察像 ${esc(exTool)} 這類現代冷態處理或精密研磨技術，它們重新定義了介入方式，在確保材料強度的同時，實現了更安全的低塵工作場域。`,
+                            a: '應避免「暴力破壞」與「粉塵高溫不可避免」的傳統觀念，容忍有害施工環境不僅危害從業人員健康，更降低了精密金屬構件的壽命。'
+                        },
+                        '泥作打除': {
+                            o: `泥作與打除常被視為高勞力密集且粗獷的工種。然而，破壞的「邊界控制」直接決定了下個修補工班的成敗。引入帶有減震技術或定規的 ${esc(exTool)}，是將這項粗活細緻化的關鍵。它在快速瓦解目標物的同時保護了周邊結構，使勞動力得以從高強度的震動疲勞中釋放。`,
+                            a: '應避免「靠蠻力解決一切」的暴力思維，缺乏邊境控制的破壞會對建築結構體造成不可逆的隱患，並加劇人員職業傷害。'
+                        },
+                        '園藝農林': {
+                            o: `戶外場域往往受限於動力來源與環境障礙。傳統燃油農機噪音大且保養繁瑣，而手持砍伐則極耗體力。導入如 ${esc(exTool)} 等高扭力無刷或特規除草切割機具，能夠以極低的操作負擔，提供等同甚至超越燃油機具的淨空效率，實現綠色、輕量化的作業革命。`,
+                            a: '應避免「燃油機具絕對優勢」與「靠體力硬幹」的舊石器思維，忽視了現代無刷電機與輕量化刀具帶來的指數型勞力解放。'
+                        },
+                        '通用與配件': {
+                            o: `配件看似微小，卻往往是決定工程順暢度的最後一哩路。以 ${esc(exTool)} 為例，這類支援型工具將通用電鑽或機具的功能延伸，補足了死角施工與特殊角度的缺陷，將原本可能需要妥協的施工精度推向極致完美。`,
+                            a: '應避免「一招半式闖天下」的思維，忽略了微小專用配件能在關鍵時刻爆發出的絕對優勢。'
+                        }
+                    };
+                    return map[c] || {
+                        o: `傳統施作方式常常因為工具的泛用性而妥協了執行的精準度，將大量的時間消耗在「準備、對位與反覆修整」等非核心價值的環節上。以 ${esc(exTool)} 為例，其設計思維是透過針對單一痛點的深度優化，以最少的操作步驟達到最高精準度。這種從「依賴手藝」到「依賴系統」的轉變，是提升整體工程可靠度的關鍵。`,
+                        a: `應避免「一套通用工具應付到底」的妥協思維，忽視了在特定工序中，導入專用設計能帶來的指數級效率提升與防呆保護。`
+                    };
+                };
+
+                const insight = getInsight(cat);
+
+                // Content folding rendering logic.
+                const renderList = (items, fallback) => {
+                    if (!items.length) return `<ul class="pcat-list"><li>${fallback}</li></ul>`;
+                    const listHtml = items.map(t => '<li>' + esc(t) + '</li>').join('');
+                    const moreBtn = items.length > 5 ? `<button class="pcat-list-more" onclick="const p=this.previousElementSibling; const isExp = p.dataset.expanded === 'true'; p.dataset.expanded = String(!isExp); this.innerText = isExp ? '展開其餘 ${items.length - 5} 項...' : '折疊顯示';">展開其餘 ${items.length - 5} 項...</button>` : '';
+                    return `<ul class="pcat-list" data-expanded="false">${listHtml}</ul>${moreBtn}`;
+                };
+
+                const costHtml = renderList(tools.map(t => t.cost).filter(c => c && c !== '-'), '施工效率與品質不穩定');
+                const descHtml = renderList(tools.map(t => t.desc), '提升效率');
 
                 return `
-<div class="pcat" id="cat-${idx}">
+                        < div class="pcat" id = "cat-${idx}" >
   <div class="pcat-banner">
     <div class="pcat-banner-bg" style="background-image:url('${bgImg}')"></div>
     <div class="pcat-banner-content">
@@ -1562,23 +1629,20 @@
     </div>
   </div>
   <div class="pcat-grid">
-    <div class="pcat-card red-card"><div class="pcat-card-title red">${IC.warn} 需要解決的問題</div>
-      <ul class="pcat-list">${tools.map(t => `<li>${esc(t.cost && t.cost !== '-' ? t.cost : '施工效率與品質不穩定')}</li>`).join('')}</ul></div>
-    <div class="pcat-card green-card"><div class="pcat-card-title green">${IC.target} 使用工具的效益</div>
-      <ul class="pcat-list">${tools.map(t => `<li>${esc(t.desc)}</li>`).join('')}</ul></div>
+    <div class="pcat-card red-card"><div class="pcat-card-title red">${IC.warn} 需要解決的問題</div>${costHtml}</div>
+    <div class="pcat-card green-card"><div class="pcat-card-title green">${IC.target} 使用工具的效益</div>${descHtml}</div>
     <div class="pcat-card yellow-card" style="grid-column: 1 / -1;"><div class="pcat-card-title yellow">${IC.bulb} 觀察與思考</div>
       <div style="font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.8; padding: 4px 8px;">
-        傳統施作如果依賴手工或通用工具（如 ${esc(summaryAlt)}），容易伴隨著隱形的${esc(summaryCost)}成本。<br>
-        導入本類別工具的核心價值在於：<b>透過專用配件將「依賴技術的變數」轉換為「可預期的標準產出」</b>，減少人為誤差與重工風險。
+        ${insight.o}
       </div>
     </div>
     <div class="pcat-card red-card" style="grid-column: 1 / -1;"><div class="pcat-card-title red">${IC.ban} 應避免的思維</div>
       <div style="font-size: 14px; color: #fca5a5; line-height: 1.8; padding: 4px 8px;">
-        固守使用「${esc(summaryAlt)}」的舒適圈，將導致上述隱形成本持續擴大，降低整體工程效率與利潤。
+        ${insight.a}
       </div>
     </div>
   </div>
-</div>`
+</div > `
             }).join('')}</div>`;
 
             document.getElementById('pview').innerHTML = `<div class="pview-container">${contentHtml}${sidebarHtml}</div>`;
