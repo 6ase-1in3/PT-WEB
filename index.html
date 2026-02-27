@@ -1001,15 +1001,16 @@
 
         .pcat-banner {
             position: relative;
-            height: 240px;
+            height: 144px;
+            /* 60% of 240px */
             border-radius: 16px;
             overflow: hidden;
             margin-bottom: 20px;
             display: flex;
             align-items: flex-end;
             padding: 24px;
-            background: linear-gradient(135deg, rgba(59, 130, 246, .15), rgba(249, 115, 22, .1));
-            border: 1px solid rgba(255, 255, 255, .08)
+            background: linear-gradient(135deg, rgba(59, 130, 246, .2), rgba(249, 115, 22, .15));
+            border: 1px solid rgba(255, 255, 255, .1)
         }
 
         .pcat-banner-bg {
@@ -1017,8 +1018,10 @@
             inset: 0;
             background-size: cover;
             background-position: center;
-            opacity: .4;
-            filter: brightness(.6)
+            opacity: .6;
+            /* Brighter */
+            filter: brightness(0.85)
+                /* Brighter */
         }
 
         .pcat-banner-content {
@@ -1191,6 +1194,73 @@
             background: #f97316
         }
 
+        /* ── Sidebar Index ── */
+        .p-sidebar {
+            position: sticky;
+            top: 80px;
+            width: 200px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            height: fit-content;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+
+        .p-sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .p-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .ps-link {
+            padding: 8px 12px;
+            color: rgba(255, 255, 255, .6);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid transparent;
+        }
+
+        .ps-link:hover,
+        .ps-link.active {
+            color: #fff;
+            background: rgba(255, 255, 255, .05);
+            border-color: rgba(255, 255, 255, .1);
+        }
+
+        .pview-container {
+            display: flex;
+            gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        .pview-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        @media(max-width:1000px) {
+            .p-sidebar {
+                display: none;
+            }
+
+            .pview-container {
+                display: block;
+            }
+        }
+
         .empty {
             grid-column: 1/-1;
             text-align: center;
@@ -1242,7 +1312,7 @@
         </div>
         <nav class="hdr-nav">
             <button class="nav-btn active" data-v="db">📋 資料庫</button>
-            <button class="nav-btn" data-v="pres">📊 簡報</button>
+            <button class="nav-btn" data-v="pres">📊 工種分析</button>
         </nav>
         <div class="hdr-right">
             <a class="hdr-src" href="https://www.youtube.com/watch?v=kv-_CezuTBg" target="_blank" rel="noopener">▶
@@ -1445,10 +1515,12 @@
                 groups[primary].push(t);
             });
 
-            document.getElementById('pview').innerHTML = `<div class="pview-inner">${Object.entries(groups).map(([cat, tools]) => {
+            const sidebarHtml = `<div class="p-sidebar">${Object.keys(groups).map((cat, idx) => `<a href="#cat-${idx}" class="ps-link">${CI[cat] || '🔧'} ${esc(cat)}</a>`).join('')}</div>`;
+
+            const contentHtml = `<div class="pview-content">${Object.entries(groups).map(([cat, tools], idx) => {
                 // Pick the HighRes image based on the category name
                 const bgThumb = CHighResImgs[cat] || (tools[0]?.thumb || '');
-                return `<div class="pcat">
+                return `<div class="pcat" id="cat-${idx}">
   <div class="pcat-banner">
     ${bgThumb ? `<div class="pcat-banner-bg" style="background-image:url('${bgThumb}')"></div>` : ''}
     <div class="pcat-banner-content">
@@ -1459,17 +1531,31 @@
   <div class="pcat-pills">${tools.map(t => `<a class="pcat-pill" href="${t.link && t.link !== '-' ? esc(t.link) : '#'}" target="_blank">${esc(t.name)} ${IC.extLink}</a>`).join('')}</div>
   <div class="pcat-grid">
     <div class="pcat-card red-card"><div class="pcat-card-title red">${IC.warn} 需要解決的問題</div>
-      <ul class="pcat-list">${tools.map(t => `<li>${esc(t.cost && t.cost !== '-' ? t.cost : t.desc)}</li>`).join('')}</ul></div>
+      <ul class="pcat-list">${tools.map(t => `<li>${esc(t.cost && t.cost !== '-' ? t.cost : '傳統方式效率不彰')}</li>`).join('')}</ul></div>
     <div class="pcat-card green-card"><div class="pcat-card-title green">${IC.target} 使用工具的效益</div>
       <ul class="pcat-list">${tools.map(t => `<li>${esc(t.desc)}</li>`).join('')}</ul></div>
-    <div class="pcat-card yellow-card"><div class="pcat-card-title yellow">${IC.bulb} 創新開發方向</div>
-      <ul class="pcat-list">${tools.slice(0, 3).map(t => `<li>研發改進 ${esc(t.name)} 的智慧化與自動化，提升${esc(t.usage)}效率</li>`).join('')}</ul></div>
+    <div class="pcat-card yellow-card"><div class="pcat-card-title yellow">${IC.bulb} 觀察與思考</div>
+      <ul class="pcat-list">${tools.map(t => `<li>為什麼不是用手工? 為什麼不是用 ${esc(t.alt !== '-' ? t.alt : '傳統工具')} 來解決? <br><span style="opacity:0.7;font-size:12px">👉 因為導入 ${esc(t.name)} 能解決${esc(t.pain !== '-' ? t.pain : '上述痛點')}的抉擇。</span></li>`).join('')}</ul></div>
     <div class="pcat-card red-card"><div class="pcat-card-title red">${IC.ban} 應避免的思維</div>
-      <ul class="pcat-list">${tools.slice(0, 3).map(t => `<li>不要因為「傳統方式也能做」而忽略 ${esc(t.name)} 帶來的效率提升</li>`).join('')}</ul></div>
-    <div class="pcat-suggest orange-card"><div class="pcat-card-title orange">${IC.check} 具體建議</div>
-      <ul class="pcat-list">${tools.map(t => `<li>投資 <strong style="color:#f97316">${esc(t.name)}</strong>（${esc(t.price)}）取代傳統方式，解決${esc(t.pain && t.pain !== '-' ? t.pain : '效率')}問題</li>`).join('')}</ul></div>
+      <ul class="pcat-list">${tools.map(t => `<li>固守使用「${esc(t.alt !== '-' ? t.alt : '傳統手工')}」的舒適圈，將導致隱形成本持續擴大。</li>`).join('')}</ul></div>
   </div>
 </div>`}).join('')}</div>`;
+
+            document.getElementById('pview').innerHTML = `<div class="pview-container">${sidebarHtml}${contentHtml}</div>`;
+
+            // Highlight sidebar on scroll
+            setTimeout(() => {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        const id = entry.target.getAttribute('id');
+                        if (entry.intersectionRatio > 0) {
+                            document.querySelectorAll('.ps-link').forEach(l => l.classList.remove('active'));
+                            document.querySelector(`.ps-link[href="#${id}"]`)?.classList.add('active');
+                        }
+                    });
+                }, { rootMargin: '0px 0px -80% 0px' });
+                document.querySelectorAll('.pcat').forEach(section => observer.observe(section));
+            }, 100);
         }
 
         (async () => {
