@@ -87,7 +87,7 @@
             place-items: center;
             font-family: var(--mono);
             font-weight: 700;
-            font-size: 13px;
+            font-size: 15px;
             color: #fff
         }
 
@@ -98,7 +98,7 @@
         .hdr-title {
             font-family: var(--mono);
             font-weight: 700;
-            font-size: 15px;
+            font-size: 17px;
             letter-spacing: 1.5px
         }
 
@@ -107,7 +107,7 @@
         }
 
         .hdr-sub {
-            font-size: 11px;
+            font-size: 13px;
             color: var(--t3);
             margin-top: -2px
         }
@@ -132,7 +132,7 @@
             color: var(--t2);
             cursor: pointer;
             font-family: var(--sans);
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -174,7 +174,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            font-size: 12px;
+            font-size: 14px;
             color: var(--t2);
             text-decoration: none;
             padding: 5px 12px;
@@ -221,9 +221,14 @@
 
         /* ── Filter Tabs ── */
         .fpanel {
-            padding: 14px 24px;
+            position: sticky;
+            top: 55px;
+            /* Adjust based on header height */
+            z-index: 90;
+            padding: 16px 24px;
             border-bottom: 1px solid var(--bdr);
-            background: #fff;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
             display: flex;
             flex-direction: column;
             gap: 14px
@@ -251,7 +256,7 @@
             color: var(--t3);
             cursor: pointer;
             font-family: var(--sans);
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -271,7 +276,7 @@
         }
 
         .f-val {
-            font-size: 10px;
+            font-size: 12px;
             font-family: var(--mono);
             padding: 2px 6px;
             border-radius: 10px;
@@ -321,7 +326,7 @@
         }
 
         .flabel {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--t4);
             text-transform: uppercase;
@@ -335,7 +340,7 @@
             border: 1px solid var(--bdr);
             background: #fff;
             color: var(--t2);
-            font-size: 11px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: .15s;
@@ -377,7 +382,7 @@
             border-radius: 6px;
             background: 0;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--t3);
             transition: .15s;
@@ -433,7 +438,7 @@
 
         .tcnt {
             font-family: var(--mono);
-            font-size: 12px;
+            font-size: 14px;
             color: var(--t3);
             white-space: nowrap;
             background: var(--bg);
@@ -521,7 +526,7 @@
             padding: 7px 14px;
             border-radius: 8px;
             border: 0;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: .15s
@@ -561,7 +566,7 @@
             background: rgba(0, 0, 0, .6);
             color: #fff;
             font-family: var(--mono);
-            font-size: 11px;
+            font-size: 13px;
             font-weight: 500;
             backdrop-filter: blur(4px);
             z-index: 1
@@ -576,7 +581,7 @@
             background: rgba(0, 0, 0, .6);
             color: #fff;
             font-family: var(--mono);
-            font-size: 11px;
+            font-size: 13px;
             font-weight: 500;
             backdrop-filter: blur(4px);
             z-index: 1
@@ -595,7 +600,7 @@
         }
 
         .card-name {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             line-height: 1.35;
             flex: 1
@@ -635,7 +640,7 @@
         .tag {
             padding: 2px 8px;
             border-radius: 10px;
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 500
         }
 
@@ -652,11 +657,11 @@
         .tag-p {
             background: rgba(220, 38, 38, .06);
             color: var(--red);
-            font-size: 9px
+            font-size: 11px
         }
 
         .card-desc {
-            font-size: 13px;
+            font-size: 15px;
             color: var(--t2);
             line-height: 1.6;
             margin-bottom: 12px;
@@ -675,7 +680,7 @@
         }
 
         .card-meta-row {
-            font-size: 12px;
+            font-size: 14px;
             line-height: 1.5;
             display: flex;
             flex-direction: column;
@@ -683,7 +688,7 @@
         }
 
         .card-meta-label {
-            font-size: 11px;
+            font-size: 13px;
             font-weight: 700;
             color: var(--pri);
             text-transform: uppercase;
@@ -708,7 +713,7 @@
         #list table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13px
+            font-size: 15px
         }
 
         #list thead {
@@ -721,7 +726,7 @@
             background: var(--bg2);
             color: var(--t2);
             font-weight: 600;
-            font-size: 11px;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: .5px;
             padding: 10px 14px;
@@ -759,7 +764,7 @@
 
         #list .l-desc {
             max-width: 300px;
-            font-size: 12px;
+            font-size: 14px;
             color: var(--t3);
             display: -webkit-box;
             -webkit-line-clamp: 1;
@@ -853,7 +858,7 @@
             cursor: pointer;
             display: grid;
             place-items: center;
-            font-size: 14px;
+            font-size: 16px;
             transition: .2s;
             z-index: 1
         }
@@ -872,7 +877,7 @@
         }
 
         .mtitle {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
             flex: 1
         }
@@ -885,7 +890,7 @@
             border-radius: 8px;
             background: #e00;
             color: #fff;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
             text-decoration: none;
             border: 0;
@@ -957,7 +962,7 @@
             cursor: pointer;
             display: grid;
             place-items: center;
-            font-size: 14px;
+            font-size: 16px;
             transition: .2s;
             z-index: 1
         }
@@ -1040,12 +1045,12 @@
             border: 1px solid rgba(249, 115, 22, .4);
             display: grid;
             place-items: center;
-            font-size: 22px;
+            font-size: 24px;
             flex-shrink: 0
         }
 
         .pcat-title {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 800;
             color: #fff;
             text-shadow: 0 2px 8px rgba(0, 0, 0, .5);
@@ -1053,7 +1058,7 @@
         }
 
         .pcat-count {
-            font-size: 13px;
+            font-size: 15px;
             color: rgba(255, 255, 255, .6);
             font-family: var(--mono)
         }
@@ -1071,7 +1076,7 @@
             border: 1px solid rgba(255, 255, 255, .12);
             background: rgba(255, 255, 255, .04);
             color: rgba(255, 255, 255, .7);
-            font-size: 12px;
+            font-size: 14px;
             font-family: var(--mono);
             text-decoration: none;
             transition: .2s;
@@ -1114,7 +1119,7 @@
         }
 
         .pcat-card-title {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 700;
             margin-bottom: 12px;
             display: flex;
@@ -1149,7 +1154,7 @@
         }
 
         .pcat-list li {
-            font-size: 13px;
+            font-size: 15px;
             color: rgba(255, 255, 255, .7);
             line-height: 1.8;
             padding-left: 16px;
@@ -1227,7 +1232,7 @@
         }
 
         .ps-title {
-            font-size: 11px;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: rgba(255, 255, 255, 0.4);
@@ -1240,7 +1245,7 @@
             padding: 8px 12px;
             color: rgba(255, 255, 255, .5);
             text-decoration: none;
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 500;
             border-radius: 8px;
             transition: .2s;
@@ -1281,7 +1286,7 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: rgba(255, 255, 255, 0.6);
-            font-size: 13px;
+            font-size: 15px;
             padding: 8px 16px;
             margin-top: 12px;
             border-radius: 6px;
@@ -1311,7 +1316,7 @@
             text-align: center;
             padding: 60px 24px;
             color: var(--t3);
-            font-size: 14px
+            font-size: 16px
         }
 
         @media(max-width:600px) {
@@ -1425,11 +1430,93 @@
                 allow="accelerometer;autoplay;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
+    <div class="modal" id="toolModal">
+        <div class="m-box" id="toolMbox"
+            style="max-width: 420px; padding: 0; background: #ffffff; border-radius: 16px; box-shadow: 0 24px 48px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05); overflow: hidden;">
+            <button class="mclose" id="toolMclose"
+                style="top: 12px; right: 12px; background: rgba(255,255,255,0.8); backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.1);">✕</button>
+            <div id="toolModalContent"></div>
+        </div>
+    </div>
+    <style>
+        /* ── Light Presentation View (White Mode) ── */
+        body.light-pres {
+            background: #ffffff !important;
+        }
+
+        body.light-pres .pview {
+            background: #f9fafb !important;
+            background-image: none !important;
+        }
+
+        body.light-pres .pview::before,
+        body.light-pres .pview::after {
+            display: none !important;
+        }
+
+        body.light-pres .pcat-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        body.light-pres .pcat-list li {
+            color: #4b5563;
+        }
+
+        body.light-pres .pcat-list-more {
+            color: #6b7280;
+            background: #f3f4f6;
+            border-color: #e5e7eb;
+        }
+
+        body.light-pres .pcat-list-more:hover {
+            color: #111;
+            background: #e5e7eb;
+        }
+
+        body.light-pres .p-sidebar {
+            background: rgba(255, 255, 255, 0.9);
+            border-left: 1px solid #e5e7eb;
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.04);
+        }
+
+        body.light-pres .ps-title {
+            color: #9ca3af;
+        }
+
+        body.light-pres .ps-link {
+            color: #6b7280;
+        }
+
+        body.light-pres .ps-link:hover,
+        body.light-pres .ps-link.active {
+            color: #111;
+            background: #f3f4f6;
+            border-color: #e5e7eb;
+        }
+
+        body.light-pres .pcat-insight-text {
+            color: #4b5563;
+        }
+
+        body.light-pres .pcat-avoid-text {
+            color: #ef4444;
+        }
+
+        body.light-pres .pcat-count {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        body.light-pres .pcat-title {
+            color: #ffffff;
+        }
+    </style>
     <script>
         const YT_ID = 'kv-_CezuTBg';
         const IC = {
             link: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`,
-            play: `<svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+            play: `<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
             playD: `<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
             yt: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2c-.3-1-1-1.8-2-2.1C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.5.6c-1 .3-1.7 1.1-2 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8c.3 1 1 1.8 2 2.1 1.9.6 9.5.6 9.5.6s7.6 0 9.5-.6c1-.3 1.7-1.1 2-2.1.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.6V8.4l6.4 3.6-6.4 3.6z"/></svg>`,
             extLink: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`,
@@ -1507,7 +1594,64 @@
         function closeYT() { document.getElementById('ytModal').classList.remove('show'); document.getElementById('ytIframe').src = ''; document.body.style.overflow = '' }
         document.getElementById('ytClose').onclick = closeYT;
         document.getElementById('ytModal').onclick = e => { if (e.target === e.currentTarget) closeYT() };
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeYT() } });
+
+        function showToolModal(i) {
+            const t = allTools[i];
+            if (!t) return;
+            const trades = t.trade.split(/\s*\/\s*/).filter(Boolean);
+            document.getElementById('toolModalContent').innerHTML = `
+                <div>
+                    ${t.thumb ? `<div style="width: 100%; height: 220px; background: url('${t.thumb}') center/cover; position: relative;">
+                        <div style="position: absolute; bottom: 12px; right: 12px; display: flex; gap: 8px;">
+                            <button class="card-action gif-act" style="padding: 6px 12px; font-size: 13px; border-radius: 20px; font-weight: 600; display: flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.9); color: var(--t1); box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onclick="closeToolModal(); showGif(${i})">${IC.play} GIF</button>
+                            <button class="card-action yt-act" style="padding: 6px 12px; font-size: 13px; border-radius: 20px; font-weight: 600; display: flex; align-items: center; gap: 4px; background: var(--pri); color: white; border: none; box-shadow: 0 2px 4px rgba(0,0,0,0.2);" onclick="closeToolModal(); showYT(${i})">${IC.yt} 影片</button>
+                        </div>
+                    </div>` : '<div style="width:100%; height:160px; background:#f1f5f9; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-weight:600;">無圖片</div>'}
+                    
+                    <div style="padding: 24px;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                            <div style="font-size: 22px; font-weight: 800; color: var(--t1); line-height: 1.2;">${esc(t.name)}</div>
+                            <div style="font-size: 18px; color: var(--pri); font-weight: 700; font-family: var(--mono); white-space: nowrap;">${esc(t.price)}</div>
+                        </div>
+                        
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;">
+                            ${trades.map(s => `<span class="tag tag-t" style="font-size:12px; padding:4px 8px;">${esc(s)}</span>`).join('')}
+                            ${t.usage && t.usage !== '-' ? `<span class="tag tag-u" style="font-size:12px; padding:4px 8px;">${esc(t.usage)}</span>` : ''}
+                            ${t.pain && t.pain !== '-' ? `<span class="tag tag-p" style="font-size:12px; padding:4px 8px;">${esc(t.pain)}</span>` : ''}
+                        </div>
+                        
+                        <div style="font-size: 15px; color: var(--t2); margin-bottom: 24px; line-height: 1.6;">${esc(t.desc)}</div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            ${t.alt && t.alt !== '-' ? `
+                            <div style="background: var(--bg); padding: 16px; border-radius: 8px; border-left: 4px solid var(--pri);">
+                                <div style="display: flex; align-items: center; gap: 6px; font-weight: 600; color: var(--pri); font-size: 13px; margin-bottom: 6px;">
+                                    傳統替代方案
+                                </div>
+                                <div style="font-size: 14px; color: var(--t1); line-height: 1.5;">${esc(t.alt)}</div>
+                            </div>
+                            ` : ''}
+                            
+                            ${t.cost && t.cost !== '-' ? `
+                            <div style="background: #fff8f5; padding: 16px; border-radius: 8px; border-left: 4px solid #e85d04;">
+                                <div style="display: flex; align-items: center; gap: 6px; font-weight: 600; color: #e85d04; font-size: 13px; margin-bottom: 6px;">
+                                    若不採用的相對成本
+                                </div>
+                                <div style="font-size: 14px; color: var(--t1); line-height: 1.5;">${esc(t.cost)}</div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('toolModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeToolModal() { document.getElementById('toolModal').classList.remove('show'); document.getElementById('toolModalContent').innerHTML = ''; document.body.style.overflow = '' }
+        document.getElementById('toolMclose').onclick = closeToolModal;
+        document.getElementById('toolModal').onclick = e => { if (e.target === e.currentTarget) closeToolModal() };
+
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeYT(); closeToolModal(); } });
 
         function initFilters() {
             const s = { trade: new Set(), usage: new Set(), pain: new Set() };
@@ -1537,8 +1681,10 @@
             btn.onclick = () => {
                 document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
                 const v = btn.dataset.v; const hdr = document.getElementById('hdr');
-                hdr.classList.toggle('dark', v === 'pres');
-                document.body.style.background = v === 'pres' ? '#0b0e14' : '';
+                // Remove dark header in presentation mode for white theme
+                hdr.classList.remove('dark');
+                document.body.classList.toggle('light-pres', v === 'pres');
+                document.body.style.background = v === 'pres' ? '#ffffff' : '';
                 document.getElementById('grid').style.display = v === 'db' ? (vm === 'grid' ? 'grid' : 'none') : 'none';
                 document.getElementById('list').style.display = v === 'db' && vm === 'list' ? 'block' : 'none';
                 document.getElementById('pview').classList.toggle('active', v === 'pres');
@@ -1577,38 +1723,51 @@
                 const bgImg = CHighResImgs[cat] || 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=1200&q=80';
 
                 // AI Designer Insight Logic
-                const exTool = tools[0]?.name || '現代專屬機具';
-                const exTool2 = tools[1]?.name || '高效夾具';
+                const exTool = tools[0];
+                const exTool2 = tools[1];
+
+                const uniquePains = [...new Set(tools.map(t => t.pain).filter(p => p && p !== '-'))].slice(0, 3);
+                const painTagsHtml = uniquePains.map(p => `<span class="tag tag-p" style="margin-right: 4px; display: inline-block;">${esc(p)}</span>`).join('');
+
+                const toolLink = (toolIdx) => {
+                    return `<span class="tool-link" style="color: var(--pri); font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 3px;" onclick="showToolModal(${allTools.indexOf(tools[toolIdx])})">${esc(tools[toolIdx].name)}</span>`;
+                };
 
                 const getInsight = (c) => {
+                    const painPrefix = painTagsHtml ? `<div style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><span style="font-size: 13px; color: var(--t3);">聚焦痛點：</span>${painTagsHtml}</div>` : '';
+
                     const map = {
                         '木工裝潢': {
-                            o: `現代木工面臨最大的挑戰在於「非標準化地形」與「收邊精度」。過去依賴手工紙板打版或目視切割，容易因人為手感導致密合度不佳。例如導入 ${esc(exTool)} ${tools[1] ? '或 ' + esc(exTool2) : ''} 等輔助定位系統，能將「依賴經驗的手感」轉化為「可被精確複製的標準化動作」，大幅提升最終成品的精緻度。`,
+                            o: `${painPrefix}現代木工面臨最大的挑戰在於「非標準化地形」與「收邊精度」。過去依賴手工紙板打版或目視切割，容易因人為手感導致密合度不佳。例如導入 ${toolLink(0)} ${tools[1] ? '或 ' + toolLink(1) : ''} 等輔助定位系統，能將「依賴經驗的手感」轉化為「可被精確複製的標準化動作」，大幅提升最終成品的精緻度。`,
                             a: '應避免「純手作才叫職人精神」的迷思，過度迷信個人經驗而抗拒引進標準化輔助治具，將導致施工品質無法隨人員變動而穩定輸出。'
                         },
                         '水電工程': {
-                            o: `水電佈線與管路安裝高度依賴現場環境的適應力，傳統上經常需要破壞性施工或在狹小空間內進行盲作業。透過導入如 ${esc(exTool)} 等測量或鑽孔夾具，我們能將施工模式從「試錯與事後修補」升級為「事前定錨與精準破壞」，有效降低災難性的重工風險。`,
+                            o: `${painPrefix}水電佈線與管路安裝高度依賴現場環境的適應力，傳統上經常需要破壞性施工或在狹小空間內進行盲作業。透過導入如 ${toolLink(0)} 等測量或鑽孔夾具，我們能將施工模式從「試錯與事後修補」升級為「事前定錨與精準破壞」，有效降低災難性的重工風險。`,
                             a: '應避免「不管三七二十一先打再說」的粗放思維，忽略事前精準探測與治具導引能帶來的巨大重工成本節約。'
                         },
                         '金屬加工': {
-                            o: `金屬加工的痛點在於處理高硬度材料時所伴隨的「危險粉塵」與「高溫熱變形」。使用傳統砂輪粗磨難以保證表面完整性。觀察像 ${esc(exTool)} 這類現代冷態處理或精密研磨技術，它們重新定義了介入方式，在確保材料強度的同時，實現了更安全的低塵工作場域。`,
+                            o: `${painPrefix}金屬加工的痛點在於處理高硬度材料時所伴隨的「危險粉塵」與「高溫熱變形」。使用傳統砂輪粗磨難以保證表面完整性。觀察像 ${toolLink(0)} 這類現代冷態處理或精密研磨技術，它們重新定義了介入方式，在確保材料強度的同時，實現了更安全的低塵工作場域。`,
                             a: '應避免「暴力破壞」與「粉塵高溫不可避免」的傳統觀念，容忍有害施工環境不僅危害從業人員健康，更降低了精密金屬構件的壽命。'
                         },
                         '泥作打除': {
-                            o: `泥作與打除常被視為高勞力密集且粗獷的工種。然而，破壞的「邊界控制」直接決定了下個修補工班的成敗。引入帶有減震技術或定規的 ${esc(exTool)}，是將這項粗活細緻化的關鍵。它在快速瓦解目標物的同時保護了周邊結構，使勞動力得以從高強度的震動疲勞中釋放。`,
+                            o: `${painPrefix}泥作與打除常被視為高勞力密集且粗獷的工種。然而，破壞的「邊界控制」直接決定了下個修補工班的成敗。引入帶有減震技術或定規的 ${toolLink(0)}，是將這項粗活細緻化的關鍵。它在快速瓦解目標物的同時保護了周邊結構，使勞動力得以從高強度的震動疲勞中釋放。`,
                             a: '應避免「靠蠻力解決一切」的暴力思維，缺乏邊境控制的破壞會對建築結構體造成不可逆的隱患，並加劇人員職業傷害。'
                         },
                         '園藝農林': {
-                            o: `戶外場域往往受限於動力來源與環境障礙。傳統燃油農機噪音大且保養繁瑣，而手持砍伐則極耗體力。導入如 ${esc(exTool)} 等高扭力無刷或特規除草切割機具，能夠以極低的操作負擔，提供等同甚至超越燃油機具的淨空效率，實現綠色、輕量化的作業革命。`,
+                            o: `${painPrefix}戶外場域往往受限於動力來源與環境障礙。傳統燃油農機噪音大且保養繁瑣，而手持砍伐則極耗體力。導入如 ${toolLink(0)} 等高扭力無刷或特規除草切割機具，能夠以極低的操作負擔，提供等同甚至超越燃油機具的淨空效率，實現綠色、輕量化的作業革命。`,
                             a: '應避免「燃油機具絕對優勢」與「靠體力硬幹」的舊石器思維，忽視了現代無刷電機與輕量化刀具帶來的指數型勞力解放。'
                         },
                         '通用與配件': {
-                            o: `配件看似微小，卻往往是決定工程順暢度的最後一哩路。以 ${esc(exTool)} 為例，這類支援型工具將通用電鑽或機具的功能延伸，補足了死角施工與特殊角度的缺陷，將原本可能需要妥協的施工精度推向極致完美。`,
+                            o: `${painPrefix}配件看似微小，卻往往是決定工程順暢度的最後一哩路。以 ${toolLink(0)} 為例，這類支援型工具將通用電鑽或機具的功能延伸，補足了死角施工與特殊角度的缺陷，將原本可能需要妥協的施工精度推向極致完美。`,
+                            a: '應避免「一招半式闖天下」的思維，忽略了微小專用配件能在關鍵時刻爆發出的絕對優勢。'
+                        },
+                        '其他': {
+                            o: `${painPrefix}在高度專業分工的現代，許多特殊工況與單一用途需求催生了特化機具。例如 ${toolLink(0)} 針對非常規的問題提供了決定性的解答。這些往往被歸類為「冷門」的工具，實質上卻是補足施工盲區、達成無死角品質的最後一塊拼圖。`,
                             a: '應避免「一招半式闖天下」的思維，忽略了微小專用配件能在關鍵時刻爆發出的絕對優勢。'
                         }
                     };
                     return map[c] || {
-                        o: `傳統施作方式常常因為工具的泛用性而妥協了執行的精準度，將大量的時間消耗在「準備、對位與反覆修整」等非核心價值的環節上。以 ${esc(exTool)} 為例，其設計思維是透過針對單一痛點的深度優化，以最少的操作步驟達到最高精準度。這種從「依賴手藝」到「依賴系統」的轉變，是提升整體工程可靠度的關鍵。`,
+                        o: `${painPrefix}傳統施作方式常常因為工具的泛用性而妥協了執行的精準度，將大量的時間消耗在「準備、對位與反覆修整」等非核心價值的環節上。以 ${toolLink(0)} 為例，其設計思維是透過針對單一痛點的深度優化，以最少的操作步驟達到最高精準度。這種從「依賴手藝」到「依賴系統」的轉變，是提升整體工程可靠度的關鍵。`,
                         a: `應避免「一套通用工具應付到底」的妥協思維，忽視了在特定工序中，導入專用設計能帶來的指數級效率提升與防呆保護。`
                     };
                 };
@@ -1642,12 +1801,12 @@
     <div class="pcat-card red-card"><div class="pcat-card-title red">${IC.warn} 需要解決的問題</div>${costHtml}</div>
     <div class="pcat-card green-card"><div class="pcat-card-title green">${IC.target} 使用工具的效益</div>${descHtml}</div>
     <div class="pcat-card yellow-card" style="grid-column: 1 / -1;"><div class="pcat-card-title yellow">${IC.bulb} 觀察與思考</div>
-      <div style="font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.8; padding: 4px 8px;">
+      <div class="pcat-insight-text" style="font-size: 16px; line-height: 1.8; padding: 4px 8px;">
         ${insight.o}
       </div>
     </div>
     <div class="pcat-card red-card" style="grid-column: 1 / -1;"><div class="pcat-card-title red">${IC.ban} 應避免的思維</div>
-      <div style="font-size: 14px; color: #fca5a5; line-height: 1.8; padding: 4px 8px;">
+      <div class="pcat-avoid-text" style="font-size: 16px; line-height: 1.8; padding: 4px 8px;">
         ${insight.a}
       </div>
     </div>
