@@ -1545,6 +1545,40 @@
         };
 
         let allTools = [], fl = { trade: '全部', usage: '全部', pain: '全部' }, vm = 'grid';
+        let insightsData = {};
+
+        async function loadInsights() {
+            try {
+                const res = await fetch('insights.md');
+                if (!res.ok) return;
+                const text = await res.text();
+                const sections = text.split(/^#\s+/m).filter(Boolean);
+
+                sections.forEach(sec => {
+                    const lines = sec.trim().split('\n');
+                    const catName = lines[0].trim();
+                    let currentMode = '';
+                    let oText = '';
+                    let aText = '';
+
+                    for (let i = 1; i < lines.length; i++) {
+                        const line = lines[i].trim();
+                        if (line === '[o]') { currentMode = 'o'; continue; }
+                        if (line === '[a]') { currentMode = 'a'; continue; }
+
+                        if (currentMode === 'o') oText += (oText ? '\n' : '') + line;
+                        if (currentMode === 'a') aText += (aText ? '\n' : '') + line;
+                    }
+
+                    if (oText || aText) {
+                        insightsData[catName] = { o: oText, a: aText };
+                    }
+                });
+            } catch (err) {
+                console.error("Failed to load insights.md", err);
+            }
+        }
+
         function esc(s) { return s ? s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;') : '' }
         function ts(t) { const [m, s] = t.split(':').map(Number); return (m || 0) * 60 + (s || 0) }
 
@@ -1736,39 +1770,41 @@
                 const getInsight = (c) => {
                     const painPrefix = painTagsHtml ? `<div style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><span style="font-size: 13px; color: var(--t3);">聚焦痛點：</span>${painTagsHtml}</div>` : '';
 
-                    const map = {
-                        '木工裝潢': {
-                            o: `${painPrefix}現代木工面臨最大的挑戰在於「非標準化地形」與「收邊精度」。過去依賴手工紙板打版或目視切割，容易因人為手感導致密合度不佳。例如導入 ${toolLink(0)} ${tools[1] ? '或 ' + toolLink(1) : ''} 等輔助定位系統，能將「依賴經驗的手感」轉化為「可被精確複製的標準化動作」，大幅提升最終成品的精緻度。`,
-                            a: '應避免「純手作才叫職人精神」的迷思，過度迷信手感切割，將導致孔距誤差大於 2mm 或直角偏差，最終面臨板材報廢與高昂的重工材料成本。'
-                        },
-                        '水電工程': {
-                            o: `${painPrefix}水電佈線與管路安裝高度依賴現場環境的適應力，傳統上經常需要破壞性施工或在狹小空間內進行盲作業。透過導入如 ${toolLink(0)} 等測量或鑽孔夾具，我們能將施工模式從「試錯與事後修補」升級為「事前定錨與精準破壞」，有效降低災難性的重工風險。`,
-                            a: '應避免「先打再說」的粗放思維，忽略探測定位極可能導致誤擊暗管或鋼筋，造成後續漏水賠償與結構修補動輒數萬元的鉅額損失。'
-                        },
-                        '金屬加工': {
-                            o: `${painPrefix}金屬加工的痛點在於處理高硬度材料時所伴隨的「危險粉塵」與「高溫熱變形」。使用傳統砂輪粗磨難以保證表面完整性。觀察像 ${toolLink(0)} 這類現代冷態處理或精密研磨技術，它們重新定義了介入方式，在確保材料強度的同時，實現了更安全的低塵工作場域。`,
-                            a: '應避免「暴力破壞即有效」的傳統觀念，傳統高溫切割極易造成金屬退火與熱變形，導致精密構件直接報廢失效，增加 30% 以上的隱形耗材成本。'
-                        },
-                        '泥作打除': {
-                            o: `${painPrefix}泥作與打除常被視為高勞力密集且粗獷的工種。然而，破壞的「邊界控制」直接決定了下個修補工班的成敗。引入帶有減震技術或定規的 ${toolLink(0)}，是將這項粗活細緻化的關鍵。它在快速瓦解目標物的同時保護了周邊結構，使勞動力得以從高強度的震動疲勞中釋放。`,
-                            a: '應避免「靠蠻力解決一切」的暴力思維，缺乏震距控制的打除極易引發周邊磁磚龜裂與結構內傷，造成泥作修補工時大幅延長與不必要的鄰損賠償費用。'
-                        },
-                        '園藝農林': {
-                            o: `${painPrefix}戶外場域往往受限於動力來源與環境障礙。傳統燃油農機噪音大且保養繁瑣，而手持砍伐則極耗體力。導入如 ${toolLink(0)} 等高扭力無刷或特規除草切割機具，能夠以極低的操作負擔，提供等同甚至超越燃油機具的淨空效率，實現綠色、輕量化的作業革命。`,
-                            a: '應避免「凡事靠體力硬幹」的思維，長期暴露於高震動環境不僅增加職業病風險，過重機具更會讓作業疲勞度倍增，導致單日有效運作工時下降超過 40%。'
-                        },
-                        '通用與配件': {
-                            o: `${painPrefix}配件看似微小，卻往往是決定工程順暢度的最後一哩路。以 ${toolLink(0)} 為例，這類支援型工具將通用電鑽或機具的功能延伸，補足了死角施工與特殊角度的缺陷，將原本可能需要妥協的施工精度推向極致完美。`,
-                            a: '應避免「一招半式闖天下」的思維，缺少轉角器或專用輔助，面對狹小死角時往往需要破壞性拆除周邊結構才能施工，使原本 5 分鐘的工序膨脹為 2 小時的復原工程。'
-                        },
-                        '其他': {
-                            o: `${painPrefix}在高度專業分工的現代，許多特殊工況與單一用途需求催生了特化機具。例如 ${toolLink(0)} 針對非常規的問題提供了決定性的解答。這些往往被歸類為「冷門」的工具，實質上卻是補足施工盲區、達成無死角品質的最後一塊拼圖。`,
-                            a: '應避免「便宜通用工具套用所有場景」的思維，使用非專用工具硬幹往往導致螺絲滑牙、工件刮傷或扭力不足而卡死，最終付出 10 倍以上的時間成本來善後。'
-                        }
+                    // Parse custom markdown tags
+                    const parseMD = (text) => {
+                        if (!text) return '';
+                        return text
+                            // Replace {Name} or {0} with tool links
+                            .replace(/\{([^}]+)\}/g, (match, p1) => {
+                                const val = p1.trim();
+                                if (/^\d+$/.test(val)) {
+                                    const idx = parseInt(val);
+                                    return tools[idx] ? toolLink(idx) : match;
+                                } else {
+                                    const tIdx = allTools.findIndex(t => t.name === val);
+                                    if (tIdx >= 0) {
+                                        return `<span class="tool-link" style="color: var(--pri); font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 3px;" onclick="showToolModal(${tIdx})">${esc(val)}</span>`;
+                                    }
+                                }
+                                return match;
+                            })
+                            // Replace <red>...</red> with styled spans
+                            .replace(/<red>(.*?)<\/red>/g, '<span style="color: var(--red); font-weight: 600;">$1</span>')
+                            // Replace <highlight>...</highlight> with styled spans
+                            .replace(/<highlight>(.*?)<\/highlight>/g, '<span style="color: var(--pri); font-weight: 600;">$1</span>')
+                            // Replace [text](url) with links
+                            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color: var(--pri); text-decoration: underline;">$1</a>')
+                            // Replace double newlines with paragraphs/breaks
+                            .replace(/\n\n/g, '<br><br>')
+                            // Replace single line breaks
+                            .replace(/\n/g, '<br>');
                     };
-                    return map[c] || {
-                        o: `${painPrefix}傳統施作方式常常因為工具的泛用性而妥協了執行的精準度，將大量的時間消耗在「準備、對位與反覆修整」等非核心價值的環節上。以 ${toolLink(0)} 為例，其設計思維是透過針對單一痛點的深度優化，以最少的操作步驟達到最高精準度。這種從「依賴手藝」到「依賴系統」的轉變，是提升整體工程可靠度的關鍵。`,
-                        a: `應避免「一套通用工具應付到底」的妥協思維，忽視了缺漏專用防呆配件，極易在大規模式量產或連續作業中產生連鎖性的尺寸誤差，導致整批成品直接報廢。`
+
+                    const rawData = insightsData[c] || insightsData['default'] || { o: '', a: '' };
+
+                    return {
+                        o: painPrefix + parseMD(rawData.o),
+                        a: parseMD(rawData.a)
                     };
                 };
 
@@ -1832,7 +1868,13 @@
         }
 
         (async () => {
-            try { const data = await (await fetch('data.json')).json(); allTools = data.tools; initFilters(); render() }
+            try {
+                await loadInsights(); // Load markdown first
+                const data = await (await fetch('data.json')).json();
+                allTools = data.tools;
+                initFilters();
+                render();
+            }
             catch (e) { document.getElementById('grid').innerHTML = `<div class="empty">無法載入 data.json：${esc(e.message)}<br>請先執行 <code>python generate_data.py</code></div>` }
         })();
     </script>
