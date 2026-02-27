@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POWER TOOLS — 產品資料庫與分析簡報</title>
+    <meta name="description" content="Power Tools 創新工具產品資料庫，涵蓋專業電動工具的分類、價格、替代方案與成本分析。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --bg: #f8fafc;
+            --bg2: #f1f5f9;
+            --card: #fff;
+            --bdr: #e2e8f0;
+            --bdr-h: #cbd5e1;
+            --pri: #2563eb;
+            --pri-d: rgba(37, 99, 235, .08);
+            --or: #ea580c;
+            --or-d: rgba(234, 88, 12, .08);
+            --t1: #0f172a;
+            --t2: #475569;
+            --t3: #94a3b8;
+            --red: #dc2626;
+            --green: #16a34a;
+            --sans: 'Inter', system-ui, sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+            --radius: 12px;
+            --cols: 4;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--t1);
+            min-height: 100vh;
+            line-height: 1.6
+        }
+
+        /* ── Header ── */
+        .hdr {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, .88);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--bdr);
+            transition: background .3s, border .3s
+        }
+
+        .hdr.dark {
+            background: rgba(11, 14, 20, .92);
+            border-color: rgba(255, 255, 255, .08)
+        }
+
+        .hdr-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .hdr-logo {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: var(--pri);
+            display: grid;
+            place-items: center;
+            font-family: var(--mono);
+            font-weight: 700;
+            font-size: 13px;
+            color: #fff
+        }
+
+        .hdr.dark .hdr-logo {
+            background: #f97316
+        }
+
+        .hdr-title {
+            font-family: var(--mono);
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 1.5px
+        }
+
+        .hdr.dark .hdr-title {
+            color: #fff
+        }
+
+        .hdr-sub {
+            font-size: 11px;
+            color: var(--t3);
+            margin-top: -2px
+        }
+
+        .hdr-nav {
+            display: flex;
+            background: var(--bg2);
+            border-radius: 10px;
+            border: 1px solid var(--bdr);
+            overflow: hidden
+        }
+
+        .hdr.dark .hdr-nav {
+            background: #1f2937;
+            border-color: rgba(255, 255, 255, .1)
+        }
+
+        .nav-btn {
+            padding: 7px 18px;
+            border: none;
+            background: 0;
+            color: var(--t2);
+            cursor: pointer;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: .2s
+        }
+
+        .nav-btn.active {
+            background: var(--pri);
+            color: #fff
+        }
+
+        .hdr.dark .nav-btn {
+            color: #9ca3af
+        }
+
+        .hdr.dark .nav-btn.active {
+            background: #f97316;
+            color: #fff
+        }
+
+        .nav-btn:hover:not(.active) {
+            color: var(--t1);
+            background: var(--bdr)
+        }
+
+        .hdr.dark .nav-btn:hover:not(.active) {
+            color: #fff;
+            background: rgba(255, 255, 255, .08)
+        }
+
+        .hdr-right {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .hdr-src {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: var(--t2);
+            text-decoration: none;
+            padding: 5px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--bdr);
+            transition: .2s
+        }
+
+        .hdr-src:hover {
+            border-color: var(--pri);
+            color: var(--pri)
+        }
+
+        .hdr.dark .hdr-src {
+            color: #9ca3af;
+            border-color: rgba(255, 255, 255, .1)
+        }
+
+        .hdr.dark .hdr-src:hover {
+            color: #f97316;
+            border-color: #f97316
+        }
+
+        .hdr.dark .hdr-src::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ef4444;
+            animation: pulse 2s infinite
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .4
+            }
+        }
+
+        /* ── Filter Tabs ── */
+        .fpanel {
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--bdr);
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 14px
+        }
+
+        .fpanel-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap
+        }
+
+        .f-tabs {
+            display: flex;
+            background: var(--bg2);
+            border-radius: 8px;
+            padding: 3px;
+            border: 1px solid var(--bdr)
+        }
+
+        .f-tab {
+            padding: 6px 14px;
+            border: none;
+            background: 0;
+            color: var(--t3);
+            cursor: pointer;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 6px;
+            transition: .2s
+        }
+
+        .f-tab.active {
+            background: #fff;
+            color: var(--pri);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .1)
+        }
+
+        .f-tab:hover:not(.active) {
+            color: var(--t2)
+        }
+
+        .f-val {
+            font-size: 10px;
+            font-family: var(--mono);
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: var(--bg);
+            color: var(--t3);
+            font-weight: 700
+        }
+
+        .f-tab.active .f-val {
+            background: var(--pri-d);
+            color: var(--pri)
+        }
+
+        .f-tab:not(.active) .f-val {
+            display: none;
+            /* Hide value badge when tab is not active, keeps UI clean */
+        }
+
+        .f-tab.has-sel:not(.active) .f-val {
+            display: inline-block;
+            /* Show it if it HAS a selection even when not active */
+            background: var(--bg);
+            color: var(--pri)
+        }
+
+        .f-tab.has-sel.active .f-val {
+            background: var(--or-d);
+            color: var(--or)
+        }
+
+        .fgroup-wrap {
+            background: var(--bg);
+            border-radius: 12px;
+            border: 1px solid var(--bdr);
+            padding: 12px 16px
+        }
+
+        .fgroup {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap
+        }
+
+        .fgroup.active {
+            display: flex
+        }
+
+        .flabel {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--t4);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-right: 4px
+        }
+
+        .ftag {
+            padding: 4px 12px;
+            border-radius: 16px;
+            border: 1px solid var(--bdr);
+            background: #fff;
+            color: var(--t2);
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: .15s;
+            white-space: nowrap
+        }
+
+        .ftag.active {
+            background: var(--pri);
+            color: #fff;
+            border-color: var(--pri)
+        }
+
+        .ftag:hover:not(.active) {
+            border-color: var(--pri);
+            color: var(--pri)
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto
+        }
+
+        .col-adj {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            background: var(--bg2);
+            border-radius: 8px;
+            padding: 2px;
+            border: 1px solid var(--bdr)
+        }
+
+        .col-btn {
+            width: 28px;
+            height: 28px;
+            border: 0;
+            border-radius: 6px;
+            background: 0;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--t3);
+            transition: .15s;
+            display: grid;
+            place-items: center
+        }
+
+        .col-btn.active {
+            background: #fff;
+            color: var(--pri);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .1)
+        }
+
+        .col-btn:hover:not(.active) {
+            color: var(--t1)
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--bg2);
+            border-radius: 8px;
+            padding: 2px;
+            border: 1px solid var(--bdr)
+        }
+
+        .vt-btn {
+            width: 30px;
+            height: 28px;
+            border: 0;
+            border-radius: 6px;
+            background: 0;
+            cursor: pointer;
+            color: var(--t3);
+            transition: .15s;
+            display: grid;
+            place-items: center
+        }
+
+        .vt-btn.active {
+            background: #fff;
+            color: var(--pri);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .1)
+        }
+
+        .vt-btn:hover:not(.active) {
+            color: var(--t1)
+        }
+
+        .vt-btn svg {
+            width: 16px;
+            height: 16px
+        }
+
+        .tcnt {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--t3);
+            white-space: nowrap;
+            background: var(--bg);
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1px solid var(--bdr)
+        }
+
+        /* ── Grid ── */
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(var(--cols), 1fr);
+            gap: 16px;
+            padding: 20px 24px
+        }
+
+        @media(max-width:1200px) {
+            #grid {
+                --cols: 3 !important
+            }
+        }
+
+        @media(max-width:900px) {
+            #grid {
+                --cols: 2 !important
+            }
+        }
+
+        @media(max-width:600px) {
+            #grid {
+                --cols: 1 !important;
+                gap: 12px;
+                padding: 12px 16px
+            }
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--bdr);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all .2s;
+            position: relative
+        }
+
+        .card:hover {
+            border-color: var(--bdr-h);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .06);
+            transform: translateY(-2px)
+        }
+
+        .card-thumb-wrap {
+            position: relative;
+            overflow: hidden
+        }
+
+        .card-thumb {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+            background: var(--bg2)
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            opacity: 0;
+            transition: .2s
+        }
+
+        .card:hover .card-overlay {
+            opacity: 1
+        }
+
+        .card-action {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 14px;
+            border-radius: 8px;
+            border: 0;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .15s
+        }
+
+        .card-action.gif-act {
+            background: rgba(255, 255, 255, .95);
+            color: var(--t1)
+        }
+
+        .card-action.gif-act:hover {
+            background: #fff;
+            transform: scale(1.05)
+        }
+
+        .card-action.yt-act {
+            background: rgba(255, 0, 0, .85);
+            color: #fff
+        }
+
+        .card-action.yt-act:hover {
+            background: #e00;
+            transform: scale(1.05)
+        }
+
+        .card-action svg {
+            width: 14px;
+            height: 14px
+        }
+
+        .card-price {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, .6);
+            color: #fff;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+            z-index: 1
+        }
+
+        .card-time {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, .6);
+            color: #fff;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+            z-index: 1
+        }
+
+        .card-body {
+            padding: 14px
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            gap: 8px
+        }
+
+        .card-name {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.35;
+            flex: 1
+        }
+
+        .card-link {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            display: grid;
+            place-items: center;
+            color: var(--t3);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: .2s;
+            border: 1px solid var(--bdr)
+        }
+
+        .card-link:hover {
+            color: var(--pri);
+            border-color: var(--pri);
+            background: var(--pri-d)
+        }
+
+        .card-link svg {
+            width: 12px;
+            height: 12px
+        }
+
+        .tags {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-bottom: 8px
+        }
+
+        .tag {
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 500
+        }
+
+        .tag-t {
+            background: var(--pri-d);
+            color: var(--pri)
+        }
+
+        .tag-u {
+            background: var(--or-d);
+            color: var(--or)
+        }
+
+        .tag-p {
+            background: rgba(220, 38, 38, .06);
+            color: var(--red);
+            font-size: 9px
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--t2);
+            line-height: 1.6;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed var(--bdr);
+        }
+
+        .card-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: var(--bg);
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--bdr);
+        }
+
+        .card-meta-row {
+            font-size: 12px;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .card-meta-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--pri);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-meta-label.cost {
+            color: var(--or);
+        }
+
+        .card-meta-val {
+            color: var(--t1);
+            font-weight: 500;
+        }
+
+        /* ── List ── */
+        #list {
+            display: none;
+            padding: 0 24px 20px
+        }
+
+        #list table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px
+        }
+
+        #list thead {
+            position: sticky;
+            top: 50px;
+            z-index: 10
+        }
+
+        #list th {
+            background: var(--bg2);
+            color: var(--t2);
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 2px solid var(--bdr);
+            white-space: nowrap
+        }
+
+        #list td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--bdr);
+            vertical-align: middle;
+            color: var(--t2)
+        }
+
+        #list tr {
+            transition: .15s
+        }
+
+        #list tbody tr:hover {
+            background: var(--pri-d)
+        }
+
+        #list .l-time {
+            font-family: var(--mono);
+            color: var(--t3);
+            white-space: nowrap;
+            width: 60px
+        }
+
+        #list .l-name {
+            font-weight: 600;
+            color: var(--t1)
+        }
+
+        #list .l-desc {
+            max-width: 300px;
+            font-size: 12px;
+            color: var(--t3);
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden
+        }
+
+        .l-actions {
+            display: flex;
+            gap: 4px;
+            align-items: center
+        }
+
+        .l-act {
+            display: grid;
+            place-items: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: 1px solid var(--bdr);
+            background: #fff;
+            cursor: pointer;
+            color: var(--t3);
+            transition: .15s;
+            text-decoration: none
+        }
+
+        .l-act:hover {
+            color: var(--pri);
+            border-color: var(--pri);
+            background: var(--pri-d)
+        }
+
+        .l-act.yt:hover {
+            color: #e00;
+            border-color: #e00;
+            background: rgba(255, 0, 0, .06)
+        }
+
+        .l-act svg {
+            width: 14px;
+            height: 14px
+        }
+
+        /* ── Modals ── */
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(0, 0, 0, .5);
+            backdrop-filter: blur(6px);
+            display: none;
+            place-items: center;
+            opacity: 0;
+            transition: opacity .2s
+        }
+
+        .modal.show {
+            display: grid;
+            opacity: 1
+        }
+
+        .mbox {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            max-width: 640px;
+            width: 92vw;
+            max-height: 90vh;
+            overflow: auto;
+            position: relative;
+            transform: scale(.96);
+            transition: transform .2s;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, .15)
+        }
+
+        .modal.show .mbox {
+            transform: scale(1)
+        }
+
+        .mclose {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid var(--bdr);
+            background: #fff;
+            color: var(--t3);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            font-size: 14px;
+            transition: .2s;
+            z-index: 1
+        }
+
+        .mclose:hover {
+            color: var(--t1);
+            border-color: var(--bdr-h)
+        }
+
+        .m-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-right: 36px
+        }
+
+        .mtitle {
+            font-size: 16px;
+            font-weight: 600;
+            flex: 1
+        }
+
+        .m-yt-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: #e00;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 0;
+            cursor: pointer;
+            transition: .15s;
+            flex-shrink: 0
+        }
+
+        .m-yt-btn:hover {
+            background: #c00;
+            transform: scale(1.03)
+        }
+
+        .m-yt-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: #fff
+        }
+
+        .mgif {
+            width: 100%;
+            border-radius: 10px;
+            background: var(--bg2)
+        }
+
+        .yt-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 400;
+            background: rgba(0, 0, 0, .7);
+            backdrop-filter: blur(8px);
+            display: none;
+            place-items: center;
+            opacity: 0;
+            transition: opacity .2s
+        }
+
+        .yt-modal.show {
+            display: grid;
+            opacity: 1
+        }
+
+        .yt-box {
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+            max-width: 900px;
+            width: 95vw;
+            position: relative;
+            transform: scale(.96);
+            transition: transform .2s;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, .3)
+        }
+
+        .yt-modal.show .yt-box {
+            transform: scale(1)
+        }
+
+        .yt-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 0;
+            background: rgba(255, 255, 255, .2);
+            color: #fff;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            font-size: 14px;
+            transition: .2s;
+            z-index: 1
+        }
+
+        .yt-close:hover {
+            background: rgba(255, 255, 255, .4)
+        }
+
+        .yt-iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border: 0;
+            display: block
+        }
+
+        /* ── Presentation (Manus Dark Style) ── */
+        .pview {
+            display: none;
+            padding: 0;
+            background: #0b0e14;
+            background-image:
+                linear-gradient(rgba(59, 130, 246, .06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, .06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            min-height: 100vh
+        }
+
+        .pview.active {
+            display: block
+        }
+
+        .pview-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px
+        }
+
+        .pcat {
+            margin-bottom: 48px
+        }
+
+        .pcat-banner {
+            position: relative;
+            height: 240px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-end;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, .15), rgba(249, 115, 22, .1));
+            border: 1px solid rgba(255, 255, 255, .08)
+        }
+
+        .pcat-banner-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: .4;
+            filter: brightness(.6)
+        }
+
+        .pcat-banner-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .pcat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(249, 115, 22, .15);
+            border: 1px solid rgba(249, 115, 22, .4);
+            display: grid;
+            place-items: center;
+            font-size: 22px;
+            flex-shrink: 0
+        }
+
+        .pcat-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, .5);
+            letter-spacing: 1px
+        }
+
+        .pcat-count {
+            font-size: 13px;
+            color: rgba(255, 255, 255, .6);
+            font-family: var(--mono)
+        }
+
+        .pcat-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px
+        }
+
+        .pcat-pill {
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .04);
+            color: rgba(255, 255, 255, .7);
+            font-size: 12px;
+            font-family: var(--mono);
+            text-decoration: none;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        .pcat-pill:hover {
+            border-color: rgba(249, 115, 22, .5);
+            color: #f97316;
+            background: rgba(249, 115, 22, .08)
+        }
+
+        .pcat-pill svg {
+            width: 12px;
+            height: 12px;
+            opacity: .5
+        }
+
+        .pcat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px
+        }
+
+        @media(max-width:768px) {
+            .pcat-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .pcat-card {
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, .08);
+            background: rgba(255, 255, 255, .03);
+            backdrop-filter: blur(8px)
+        }
+
+        .pcat-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .pcat-card-title.red {
+            color: #ef4444
+        }
+
+        .pcat-card-title.green {
+            color: #22c55e
+        }
+
+        .pcat-card-title.yellow {
+            color: #eab308
+        }
+
+        .pcat-card-title.orange {
+            color: #f97316
+        }
+
+        .pcat-card-title svg {
+            width: 18px;
+            height: 18px
+        }
+
+        .pcat-list {
+            list-style: none;
+            padding: 0
+        }
+
+        .pcat-list li {
+            font-size: 13px;
+            color: rgba(255, 255, 255, .7);
+            line-height: 1.8;
+            padding-left: 16px;
+            position: relative
+        }
+
+        .pcat-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%
+        }
+
+        .pcat-card.red-card .pcat-list li::before {
+            background: #ef4444
+        }
+
+        .pcat-card.green-card .pcat-list li::before {
+            background: #22c55e
+        }
+
+        .pcat-card.yellow-card .pcat-list li::before {
+            background: #eab308
+        }
+
+        .pcat-card.orange-card .pcat-list li::before {
+            background: #f97316
+        }
+
+        .pcat-suggest {
+            grid-column: 1/-1;
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(249, 115, 22, .2);
+            background: rgba(249, 115, 22, .04)
+        }
+
+        .pcat-suggest .pcat-list li::before {
+            background: #f97316
+        }
+
+        .empty {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 60px 24px;
+            color: var(--t3);
+            font-size: 14px
+        }
+
+        @media(max-width:600px) {
+            .hdr {
+                padding: 8px 16px
+            }
+
+            .hdr-sub {
+                display: none
+            }
+
+            .fpanel {
+                padding: 10px 16px;
+                gap: 8px
+            }
+
+            .f-tabs {
+                flex: 1;
+                justify-content: center
+            }
+
+            .toolbar {
+                width: 100%;
+                justify-content: space-between;
+                margin: 0
+            }
+
+            .col-adj {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="hdr" id="hdr">
+        <div class="hdr-brand">
+            <div class="hdr-logo">PT</div>
+            <div>
+                <div class="hdr-title">POWER TOOLS</div>
+                <div class="hdr-sub">產品資料庫與分析簡報</div>
+            </div>
+        </div>
+        <nav class="hdr-nav">
+            <button class="nav-btn active" data-v="db">📋 資料庫</button>
+            <button class="nav-btn" data-v="pres">📊 簡報</button>
+        </nav>
+        <div class="hdr-right">
+            <a class="hdr-src" href="https://www.youtube.com/watch?v=kv-_CezuTBg" target="_blank" rel="noopener">▶
+                影片來源</a>
+        </div>
+    </header>
+    <div class="fpanel" id="fpanel">
+        <div class="fpanel-top">
+            <div class="f-tabs">
+                <button class="f-tab active" data-target="fg-trade">工種 <span class="f-val"
+                        id="val-trade">全部</span></button>
+                <button class="f-tab" data-target="fg-usage">用途 <span class="f-val" id="val-usage">全部</span></button>
+                <button class="f-tab" data-target="fg-pain">痛點 <span class="f-val" id="val-pain">全部</span></button>
+            </div>
+            <div class="toolbar">
+                <div class="tcnt" id="tcnt"></div>
+                <div class="col-adj"><button class="col-btn" data-c="3">3</button><button class="col-btn active"
+                        data-c="4">4</button><button class="col-btn" data-c="5">5</button></div>
+                <div class="view-toggle">
+                    <button class="vt-btn active" data-m="grid" title="卡片"><svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7" rx="1" />
+                            <rect x="14" y="3" width="7" height="7" rx="1" />
+                            <rect x="3" y="14" width="7" height="7" rx="1" />
+                            <rect x="14" y="14" width="7" height="7" rx="1" />
+                        </svg></button>
+                    <button class="vt-btn" data-m="list" title="清單"><svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <line x1="8" y1="6" x2="21" y2="6" />
+                            <line x1="8" y1="12" x2="21" y2="12" />
+                            <line x1="8" y1="18" x2="21" y2="18" />
+                            <line x1="3" y1="6" x2="3.01" y2="6" />
+                            <line x1="3" y1="12" x2="3.01" y2="12" />
+                            <line x1="3" y1="18" x2="3.01" y2="18" />
+                        </svg></button>
+                </div>
+            </div>
+        </div>
+        <div class="fgroup-wrap">
+            <div class="fgroup active" id="fg-trade"><span class="flabel">篩選工種：</span></div>
+            <div class="fgroup" id="fg-usage"><span class="flabel">篩選用途：</span></div>
+            <div class="fgroup" id="fg-pain"><span class="flabel">篩選痛點：</span></div>
+        </div>
+    </div>
+    <main id="grid"></main>
+    <div id="list"></div>
+    <main class="pview" id="pview"></main>
+    <div class="modal" id="modal">
+        <div class="mbox">
+            <button class="mclose" id="mclose">✕</button>
+            <div class="m-header">
+                <div class="mtitle" id="mtitle"></div>
+                <button class="m-yt-btn" id="m-yt-btn"><svg viewBox="0 0 24 24">
+                        <path
+                            d="M23.5 6.2c-.3-1-1-1.8-2-2.1C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.5.6c-1 .3-1.7 1.1-2 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8c.3 1 1 1.8 2 2.1 1.9.6 9.5.6 9.5.6s7.6 0 9.5-.6c1-.3 1.7-1.1 2-2.1.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.6V8.4l6.4 3.6-6.4 3.6z" />
+                    </svg> 原始影片</button>
+            </div>
+            <img class="mgif" id="mgif" alt="GIF" loading="lazy">
+        </div>
+    </div>
+    <div class="yt-modal" id="ytModal">
+        <div class="yt-box">
+            <button class="yt-close" id="ytClose">✕</button>
+            <iframe class="yt-iframe" id="ytIframe"
+                allow="accelerometer;autoplay;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+    <script>
+        const YT_ID = 'kv-_CezuTBg';
+        const IC = {
+            link: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`,
+            play: `<svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+            playD: `<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+            yt: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2c-.3-1-1-1.8-2-2.1C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.5.6c-1 .3-1.7 1.1-2 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8c.3 1 1 1.8 2 2.1 1.9.6 9.5.6 9.5.6s7.6 0 9.5-.6c1-.3 1.7-1.1 2-2.1.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.6V8.4l6.4 3.6-6.4 3.6z"/></svg>`,
+            extLink: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`,
+            warn: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+            target: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
+            bulb: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>`,
+            ban: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>`,
+            check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+        };
+        const CI = { '木工': '🪚', '裝潢': '🏠', '金屬加工': '⚙️', '園藝': '🌿', '營造': '🏗️', '通用': '🔧', '手作': '✂️', '汽車修護': '🚗', '汽車': '🚗', '機械': '⚙️', '油漆': '🎨', '石材': '🪨', '泥作': '🧱', '防護配件': '🦺', '戶外': '⛺', '拆除': '💥', '林業': '🌲', '水電工程': '💡', '收納系統': '📦', '水電': '🔌', '檢修': '🔩', '工安': '⚠️', '細部': '🔬', '工程': '🏗️', '清潔': '🧹', '測量': '📐' };
+
+        // Manually mapped Unsplash fallback images for the presentation mode (since original Manus CDN URLs will expire)
+        // The original URLs shown below are carefully selected substitutes matching the theme 
+        const CHighResImgs = {
+            '木工': 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?w=1200&q=80',
+            '金屬加工': 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1200&q=80',
+            '園藝': 'https://images.unsplash.com/photo-1416879598555-520e5c8af4ce?w=1200&q=80',
+            '營造': 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1200&q=80',
+            '汽車': 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=1200&q=80',
+            '通用工具': 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=1200&q=80',
+            '通用': 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=1200&q=80',
+            '泥作': 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80',
+            '石材': 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80',
+            '水電工程': 'https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=1200&q=80',
+            '油漆': 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=1200&q=80',
+            '防護配件': 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1200&q=80',
+            '收納系統': 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1200&q=80',
+        };
+
+        let allTools = [], fl = { trade: '全部', usage: '全部', pain: '全部' }, vm = 'grid';
+        function esc(s) { return s ? s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;') : '' }
+        function ts(t) { const [m, s] = t.split(':').map(Number); return (m || 0) * 60 + (s || 0) }
+
+        function updateTabVals() {
+            // Update textual label
+            const tText = fl.trade === '全部' ? '' : fl.trade;
+            const uText = fl.usage === '全部' ? '' : fl.usage;
+            const pText = fl.pain === '全部' ? '' : fl.pain;
+
+            document.getElementById('val-trade').textContent = tText;
+            document.getElementById('val-usage').textContent = uText;
+            document.getElementById('val-pain').textContent = pText;
+
+            document.querySelectorAll('.f-tab').forEach(t => {
+                const k = t.dataset.target.replace('fg-', '');
+                const hasSel = fl[k] !== '全部';
+                t.classList.toggle('has-sel', hasSel);
+                // Also toggle visibility directly to fully hide the pill if empty
+                t.querySelector('.f-val').style.display = hasSel ? '' : 'none';
+            });
+        }
+
+        function filtered() { return allTools.filter(t => { if (fl.trade !== '全部' && !t.trade.includes(fl.trade)) return false; if (fl.usage !== '全部' && !t.usage.includes(fl.usage)) return false; if (fl.pain !== '全部' && !t.pain.includes(fl.pain)) return false; return true }) }
+        function render() {
+            const tools = filtered(); document.getElementById('tcnt').textContent = `符合項: ${tools.length} / ${allTools.length}`;
+            updateTabVals();
+            if (vm === 'grid') { renderGrid(tools); document.getElementById('grid').style.display = 'grid'; document.getElementById('list').style.display = 'none' }
+            else { renderList(tools); document.getElementById('grid').style.display = 'none'; document.getElementById('list').style.display = 'block' }
+        }
+        function renderGrid(tools) {
+            const g = document.getElementById('grid'); if (!tools.length) { g.innerHTML = '<div class="empty">找不到符合條件的工具 🔍</div>'; return }
+            g.innerHTML = tools.map((t, i) => { const trades = t.trade.split(/\s*\/\s*/).filter(Boolean); return `<div class="card"><div class="card-thumb-wrap">${t.thumb ? `<img class="card-thumb" src="${t.thumb}" alt="${esc(t.name)}" loading="lazy">` : '<div class="card-thumb"></div>'}<div class="card-price">${esc(t.price)}</div><div class="card-time">${esc(t.time)}</div><div class="card-overlay"><button class="card-action gif-act" onclick="showGif(${i})">${IC.play} GIF</button><button class="card-action yt-act" onclick="showYT(${i})">${IC.yt} 影片</button></div></div><div class="card-body"><div class="card-top"><div class="card-name">${esc(t.name)}</div>${t.link && t.link !== '-' ? `<a class="card-link" href="${esc(t.link)}" target="_blank" rel="noopener">${IC.link}</a>` : ''}</div><div class="tags">${trades.map(s => `<span class="tag tag-t">${esc(s)}</span>`).join('')}${t.usage && t.usage !== '-' ? `<span class="tag tag-u">${esc(t.usage)}</span>` : ''}${t.pain && t.pain !== '-' ? `<span class="tag tag-p">${esc(t.pain)}</span>` : ''}</div><div class="card-desc">${esc(t.desc)}</div><div class="card-meta">${t.alt && t.alt !== '-' ? `<div class="card-meta-row"><span class="card-meta-label">替代方案</span><span class="card-meta-val">${esc(t.alt)}</span></div>` : ''}${t.cost && t.cost !== '-' ? `<div class="card-meta-row"><span class="card-meta-label cost">相對成本</span><span class="card-meta-val">${esc(t.cost)}</span></div>` : ''}</div></div></div>` }).join('')
+        }
+        function renderList(tools) {
+            const el = document.getElementById('list'); if (!tools.length) { el.innerHTML = '<div class="empty">找不到符合條件的工具 🔍</div>'; return }
+            el.innerHTML = `<table><thead><tr><th>時間</th><th>產品名稱</th><th>工種</th><th>用途</th><th>售價</th><th>成本痛點</th><th>操作</th></tr></thead><tbody>${tools.map((t, i) => { const trades = t.trade.split(/\s*\/\s*/).filter(Boolean); return `<tr><td class="l-time">${esc(t.time)}</td><td><div class="l-name">${esc(t.name)}</div><div class="l-desc">${esc(t.desc)}</div></td><td class="l-trade">${trades.map(s => `<span class="tag tag-t">${esc(s)}</span>`).join(' ')}</td><td>${esc(t.usage)}</td><td class="l-price">${esc(t.price)}</td><td>${t.pain && t.pain !== '-' ? `<span class="tag tag-p">${esc(t.pain)}</span>` : ''}</td><td class="l-actions"><button class="l-act" onclick="showGif(${i})">${IC.playD}</button><button class="l-act yt" onclick="showYT(${i})">${IC.yt}</button>${t.link && t.link !== '-' ? `<a class="l-act" href="${esc(t.link)}" target="_blank">${IC.link}</a>` : ''}</td></tr>` }).join('')}</tbody></table>`
+        }
+
+        let curIdx = 0;
+        function showGif(i) { curIdx = i; const t = allTools[i]; if (!t) return; document.getElementById('mtitle').textContent = t.name; document.getElementById('mgif').src = t.gif || ''; document.getElementById('modal').classList.add('show'); document.body.style.overflow = 'hidden' }
+        function closeModal() { document.getElementById('modal').classList.remove('show'); document.getElementById('mgif').src = ''; document.body.style.overflow = '' }
+        document.getElementById('mclose').onclick = closeModal;
+        document.getElementById('modal').onclick = e => { if (e.target === e.currentTarget) closeModal() };
+        document.getElementById('m-yt-btn').onclick = () => { closeModal(); showYT(curIdx) };
+
+        function showYT(i) { const t = allTools[i]; if (!t) return; document.getElementById('ytIframe').src = `https://www.youtube.com/embed/${YT_ID}?start=${ts(t.time)}&autoplay=1`; document.getElementById('ytModal').classList.add('show'); document.body.style.overflow = 'hidden' }
+        function closeYT() { document.getElementById('ytModal').classList.remove('show'); document.getElementById('ytIframe').src = ''; document.body.style.overflow = '' }
+        document.getElementById('ytClose').onclick = closeYT;
+        document.getElementById('ytModal').onclick = e => { if (e.target === e.currentTarget) closeYT() };
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeYT() } });
+
+        function initFilters() {
+            const s = { trade: new Set(), usage: new Set(), pain: new Set() };
+            allTools.forEach(t => {
+                t.trade.split(/\s*\/\s*/).forEach(x => { if (x.trim()) s.trade.add(x.trim()) });
+                if (t.usage && t.usage !== '-') s.usage.add(t.usage);
+                if (t.pain && t.pain !== '-') s.pain.add(t.pain)
+            });
+            mkTags('fg-trade', 'trade', ['全部', ...[...s.trade].sort()]);
+            mkTags('fg-usage', 'usage', ['全部', ...[...s.usage].sort()]);
+            mkTags('fg-pain', 'pain', ['全部', ...[...s.pain].sort()]);
+
+            // Setup tabs
+            document.querySelectorAll('.f-tab').forEach(b => {
+                b.onclick = () => {
+                    document.querySelectorAll('.f-tab').forEach(x => x.classList.remove('active'));
+                    b.classList.add('active');
+                    document.querySelectorAll('.fgroup').forEach(g => g.classList.remove('active'));
+                    document.getElementById(b.dataset.target).classList.add('active');
+                };
+            });
+        }
+        function mkTags(id, key, items) { const c = document.getElementById(id); items.forEach(item => { const b = document.createElement('button'); b.className = 'ftag' + (item === fl[key] ? ' active' : ''); b.textContent = item; b.onclick = () => { fl[key] = item; c.querySelectorAll('.ftag').forEach(x => x.classList.remove('active')); b.classList.add('active'); render() }; c.appendChild(b) }) }
+        document.querySelectorAll('.col-btn').forEach(b => { b.onclick = () => { document.querySelectorAll('.col-btn').forEach(x => x.classList.remove('active')); b.classList.add('active'); document.getElementById('grid').style.setProperty('--cols', b.dataset.c) } });
+        document.querySelectorAll('.vt-btn').forEach(b => { b.onclick = () => { document.querySelectorAll('.vt-btn').forEach(x => x.classList.remove('active')); b.classList.add('active'); vm = b.dataset.m; render() } });
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+                const v = btn.dataset.v; const hdr = document.getElementById('hdr');
+                hdr.classList.toggle('dark', v === 'pres');
+                document.body.style.background = v === 'pres' ? '#0b0e14' : '';
+                document.getElementById('grid').style.display = v === 'db' ? (vm === 'grid' ? 'grid' : 'none') : 'none';
+                document.getElementById('list').style.display = v === 'db' && vm === 'list' ? 'block' : 'none';
+                document.getElementById('pview').classList.toggle('active', v === 'pres');
+                document.getElementById('fpanel').style.display = v === 'db' ? '' : 'none';
+                if (v === 'pres') renderPres(); if (v === 'db') render();
+            }
+        });
+
+        /* ── Presentation (Manus-style) ── */
+        function renderPres() {
+            // Group by primary trade
+            const groups = {};
+            allTools.forEach(t => {
+                const cats = t.trade.split(/\s*\/\s*/);
+                const primary = cats[0].trim();
+                if (!groups[primary]) groups[primary] = [];
+                groups[primary].push(t);
+            });
+
+            document.getElementById('pview').innerHTML = `<div class="pview-inner">${Object.entries(groups).map(([cat, tools]) => {
+                // Pick the HighRes image based on the category name
+                const bgThumb = CHighResImgs[cat] || (tools[0]?.thumb || '');
+                return `<div class="pcat">
+  <div class="pcat-banner">
+    ${bgThumb ? `<div class="pcat-banner-bg" style="background-image:url('${bgThumb}')"></div>` : ''}
+    <div class="pcat-banner-content">
+      <div class="pcat-icon">${CI[cat] || '🔧'}</div>
+      <div><div class="pcat-title">${esc(cat)}</div><div class="pcat-count">${tools.length} 項相關工具</div></div>
+    </div>
+  </div>
+  <div class="pcat-pills">${tools.map(t => `<a class="pcat-pill" href="${t.link && t.link !== '-' ? esc(t.link) : '#'}" target="_blank">${esc(t.name)} ${IC.extLink}</a>`).join('')}</div>
+  <div class="pcat-grid">
+    <div class="pcat-card red-card"><div class="pcat-card-title red">${IC.warn} 需要解決的問題</div>
+      <ul class="pcat-list">${tools.map(t => `<li>${esc(t.cost && t.cost !== '-' ? t.cost : t.desc)}</li>`).join('')}</ul></div>
+    <div class="pcat-card green-card"><div class="pcat-card-title green">${IC.target} 使用工具的效益</div>
+      <ul class="pcat-list">${tools.map(t => `<li>${esc(t.desc)}</li>`).join('')}</ul></div>
+    <div class="pcat-card yellow-card"><div class="pcat-card-title yellow">${IC.bulb} 創新開發方向</div>
+      <ul class="pcat-list">${tools.slice(0, 3).map(t => `<li>研發改進 ${esc(t.name)} 的智慧化與自動化，提升${esc(t.usage)}效率</li>`).join('')}</ul></div>
+    <div class="pcat-card red-card"><div class="pcat-card-title red">${IC.ban} 應避免的思維</div>
+      <ul class="pcat-list">${tools.slice(0, 3).map(t => `<li>不要因為「傳統方式也能做」而忽略 ${esc(t.name)} 帶來的效率提升</li>`).join('')}</ul></div>
+    <div class="pcat-suggest orange-card"><div class="pcat-card-title orange">${IC.check} 具體建議</div>
+      <ul class="pcat-list">${tools.map(t => `<li>投資 <strong style="color:#f97316">${esc(t.name)}</strong>（${esc(t.price)}）取代傳統方式，解決${esc(t.pain && t.pain !== '-' ? t.pain : '效率')}問題</li>`).join('')}</ul></div>
+  </div>
+</div>`}).join('')}</div>`;
+        }
+
+        (async () => {
+            try { const data = await (await fetch('data.json')).json(); allTools = data.tools; initFilters(); render() }
+            catch (e) { document.getElementById('grid').innerHTML = `<div class="empty">無法載入 data.json：${esc(e.message)}<br>請先執行 <code>python generate_data.py</code></div>` }
+        })();
+    </script>
+</body>
+
+</html>
