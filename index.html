@@ -1441,22 +1441,20 @@
         };
         const CI = { '木工': '🪚', '裝潢': '🏠', '金屬加工': '⚙️', '園藝': '🌿', '營造': '🏗️', '通用': '🔧', '手作': '✂️', '汽車修護': '🚗', '汽車': '🚗', '機械': '⚙️', '油漆': '🎨', '石材': '🪨', '泥作': '🧱', '防護配件': '🦺', '戶外': '⛺', '拆除': '💥', '林業': '🌲', '水電工程': '💡', '收納系統': '📦', '水電': '🔌', '檢修': '🔩', '工安': '⚠️', '細部': '🔬', '工程': '🏗️', '清潔': '🧹', '測量': '📐' };
 
-        // Manually mapped Unsplash fallback images for the presentation mode (since original Manus CDN URLs will expire)
-        // The original URLs shown below are carefully selected substitutes matching the theme 
+        // Generated unique, bright aesthetics images for each main category
         const CHighResImgs = {
-            '木工': 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?w=1200&q=80',
-            '金屬加工': 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1200&q=80',
-            '園藝': 'https://images.unsplash.com/photo-1416879598555-520e5c8af4ce?w=1200&q=80',
-            '營造': 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1200&q=80',
-            '汽車': 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=1200&q=80',
-            '通用工具': 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=1200&q=80',
-            '通用': 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=1200&q=80',
-            '泥作': 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80',
-            '石材': 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80',
-            '水電工程': 'https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=1200&q=80',
-            '油漆': 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=1200&q=80',
-            '防護配件': 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1200&q=80',
-            '收納系統': 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1200&q=80',
+            '木工裝潢': 'bg/cat_woodworking.png',
+            '金屬加工': 'bg/cat_metalworking.png',
+            '園藝農林': 'bg/cat_gardening.png',
+            '營造工程': 'bg/cat_construction.png',
+            '汽車機械': 'bg/cat_automotive.png',
+            '通用與配件': 'bg/cat_general.png',
+            '其他': 'bg/cat_other.png',
+            // Fallbacks
+            '木工': 'bg/cat_woodworking.png',
+            '營造': 'bg/cat_construction.png',
+            '汽車': 'bg/cat_automotive.png',
+            '通用': 'bg/cat_general.png'
         };
 
         let allTools = [], fl = { trade: '全部', usage: '全部', pain: '全部' }, vm = 'grid';
